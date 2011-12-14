@@ -1,7 +1,0 @@
-function hola()
-{
-}
-
-function chao()
-{
-}
