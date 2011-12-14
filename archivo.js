@@ -1,7 +1,7 @@
 
 function probando()
 {
-	alert("Hola Mundo");
+	alert("Hola Mundo!");
 }
 
 function probando2()
