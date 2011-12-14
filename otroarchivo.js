@@ -1,0 +1,7 @@
+function hola()
+{
+}
+
+function chao()
+{
+}
