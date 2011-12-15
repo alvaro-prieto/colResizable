@@ -4,7 +4,7 @@
 
 colResizable is a jQuery plugin designed to enhance any HTML table element adding column resizing features by dragging column anchors manually. It is tiny in size (colResizable v1.0 is only 2.8kb) and it doesn´t require any other library dependencies such as jQuery-UI or others. It is fully compatible with all major browsers(IE7+, Firefox, Chrome and Opera), and works perfectly with both percentage and pixel-based table layouts. colResizable can be also used as multiple range slider.
 
-### [official colResizable website](http://quocity.com/colresizable/)
+#### [official colResizable website](http://quocity.com/colresizable/)
 
 
 Pyechonest is an open source Python library for the Echo Nest API.  With Pyechonest you have Python access to the entire set of API methods including:
