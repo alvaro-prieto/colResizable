@@ -1,6 +1,6 @@
 {
     "name": "colResizable",
-    "version": "1.3",
+    "version": "1.2",
     "title": "colResizable",
     "author": {
         "name": "Alvaro Prieto Lauroba",
@@ -29,6 +29,12 @@
     ],
     "homepage": "http://quocity.com/colresizable/",
     "files": [
-        "colResizable-1.3.min.js"
+        "colResizable-1.2.min.js",
+		"readme.txt",
+		"source/colResizable-1.2.med.js",
+		"source/colResizable-1.2.source.js",
+		"samples/colResizable.demo.zip",
+		"samples/rangeSlider.demo.zip",
+		"samples/rangeSlider.demo.2.zip"		
     ]
 }
