@@ -8,8 +8,10 @@
 	   
                                        http://quocity.com/colresizable
 														         
-    ENGLISH:
-		
+    
+
+	ENGLISH:
+	
 	colResizable is a jQuery  plugin designed to enhance any kind of HTML table object
 	adding column resizing  features by  dragging column anchors manually. It is  tiny
 	in size (colResizable v1.0 is only 2.8kb) and it doesn´t require any other library
@@ -40,6 +42,7 @@
 	adaptándose al tamaño disponible. 
 
 	colResizable también puede ser utilizado como selector de rangos múltiples.
+	
 	
 	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 	@author Alvaro Prieto Lauroba
