@@ -1,3 +1,5 @@
+![alt text](http://quocity.com/colresizable/gitLogo.png "colResizable jQuery plugin")
+
 # Pyechonest
 
 Tap into [The Echo Nest's](http://the.echonest.com/) Musical Brain for the best music search, information, recommendations and remix tools on the web.
