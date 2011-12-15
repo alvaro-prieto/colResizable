@@ -25,6 +25,7 @@
 
 	*  Other minor bugs
 
+	
 	Thanks to Martin Pruim (VvE-site.nl) and Yzlow for reporting bugs
 
 	
