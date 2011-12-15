@@ -1,4 +1,4 @@
-![alt text](http://quocity.com/colresizable/gitLogo.png "colResizable jQuery plugin")
+![alt text](http://quocity.com/colresizable/githubLogo.png "colResizable jQuery plugin")
 
 # Pyechonest
 
