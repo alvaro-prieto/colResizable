@@ -6,7 +6,8 @@
          | (_| (_) | | | \ \  __/\__ \ |/ / (_| | |_) | |  __/  | |_ ___) |
           \___\___/|_|_|  \_\___||___/_/___\__,_|_.__/|_|\___|  |_(_)____/ 
 														         
-                                                     
+                                            http://quocity.com/colresizable   
+											
   CHANGELOG:
   
 	*	'hoverCursor'  and  'dragCursor' attributes where added in order to allow cursor

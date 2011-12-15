@@ -1,27 +1,23 @@
 
-                    _ _____           _          _     _        __   ____  
-                   | |  __ \         (_)        | |   | |      /_ | |___ \ 
-           ___ ___ | | |__) |___  ___ _ ______ _| |__ | | ___   | |   __) |
-          / __/ _ \| |  _  // _ \/ __| |_  / _` | '_ \| |/ _ \  | |  |__ < 
-         | (_| (_) | | | \ \  __/\__ \ |/ / (_| | |_) | |  __/  | |_ ___) |
-          \___\___/|_|_|  \_\___||___/_/___\__,_|_.__/|_|\___|  |_(_)____/ 
-														         
+                 _ _____           _          _     _        __   ___  
+                | |  __ \         (_)        | |   | |      /_ | |__ \ 
+        ___ ___ | | |__) |___  ___ _ ______ _| |__ | | ___   | |    ) |
+       / __/ _ \| |  _  // _ \/ __| |_  / _` | '_ \| |/ _ \  | |   / / 
+      | (_| (_) | | | \ \  __/\__ \ |/ / (_| | |_) | |  __/  | |_ / /_ 
+       \___\___/|_|_|  \_\___||___/_/___\__,_|_.__/|_|\___|  |_(_)____|
+                                                                       
+										http://quocity.com/colresizable										
                                                      
   CHANGELOG:
   
-	*	'hoverCursor'  and  'dragCursor' attributes where added in order to allow cursor
-		customization (thanks  to  TMTisFree and Robert Schönfeld for their suggestion).
-		
-	*	Layout persistence after postbacks added  when  the  attribute 'postbackSafe' is 
-		enabled (especially useful  while working  with server-side technologies such as 
-		PHP or .NET)
-		
-	*	Support for tables layouts defined using <thead>, <tbody>, <colgroup> and  other
-		similar variations. Thanks Robert Schönfeld for your useful test case
-		
-	*	Fixed small problem with nested tables (thanks to Kinvara Corbett)
+		*	headerOnly attribute added to specify that the vertical size of the 
+			column anchors will be bounded to the size of the first row.
+			
+		*	Other minor bug-fixing
+
 	
-	*	Support for tables with margins (bug reported by Steven I.)
+	Thanks to  Denis Manente who suggested the headerOnly attribute and also to 
+	TMTisFree who found a missing semicolon.
 
 	
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
@@ -29,23 +25,14 @@
   
   HISTORIAL DE CAMBIOS:
 
-	*	Se agregaron los atributos 'hoverCursor' y 'dragCursor' para permitir personalizar 
-		la apariencia del cursor (agradecimientos a TMTisFree y a Robert Schönfeld por sus 
-		respectivas sugerencias).
-		
-	*	Se agregó la  posibilidad de  que el tamaño  de  las  columnas persista después de 
-		refrescar  el browser o ejecutar un  postback,  muy útil  cuando  se  trabaja  con 
-		páginas con lógica del lado del servidor.
-		
-	*	Se agregó soporte para tablas con <thead>, <tbody>, <colgroup> además otras varia-
-		ciones en la forma de definir una tabla ¡gracias Robert Schönfeld por tu estupenda
-		observación!
-		
-	*	Se solucionó problema con las tablas anidadas unas dentro de otras (agradecimien-
-		tos a Kinvara Corbett)
-		
-	*	Se agregó soporte para tablas con márgenes laterales (reportado por Steven I.)
+		*	Se agregó  el atributo headerOnly el cual permite limitar el tamaño 
+			vertical de los amarres de redimensionamiento al alto de la fila de 
+			encabezado.
+			
+		*	Solucionados otros problemas menores
 
+	Agradecimientos para Denis Manente quien sugirió la inclusión del  atributo 
+	headerOnly, y TMTisFree por encontrar un punto y coma faltante.
 	
 
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
