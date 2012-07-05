@@ -129,7 +129,8 @@
 				t.cg.eq(i).css("width", aux[i]);	//this code is required in order to create an inline CSS rule with higher precedence than an existing CSS class in the "col" elements
 		}else{							//in serialization mode (after resizing a column)
 			S[t.id] ="";				//clean up previous data
-			for(i in t.c){				//iterate through columns
+			for(;i < t.c.length; i++){		//iterate through columns
+			
 				w = t.c[i].width();		//width is obtained
 				S[t.id] += w+";";		//width is appended to the sessionStorage object using ID as key
 				m+=w;					//carriage is updated to obtain the full size used by columns
