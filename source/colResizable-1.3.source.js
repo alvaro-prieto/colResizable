@@ -241,8 +241,8 @@
 	 * table layout according to the browser's size synchronizing related grips 
 	 */
 	var onResize = function(){
-		for(t in tables){		
-			var t = tables[t], i, mw=0;				
+		for (var ix = 0; ix < tables.length; ix++) {
+			var t = tables[ix], i, mw = 0;
 			t.removeClass(SIGNATURE);						//firefox doesnt like layout-fixed in some cases
 			if (t.w != t.width()) {							//if the the table's width has changed
 				t.w = t.width();							//its new value is kept
