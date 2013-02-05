@@ -1,26 +1,26 @@
 /**
-               _ _____           _          _     _      
-              | |  __ \         (_)        | |   | |     
-      ___ ___ | | |__) |___  ___ _ ______ _| |__ | | ___ 
+               _ _____           _          _     _
+              | |  __ \         (_)        | |   | |
+      ___ ___ | | |__) |___  ___ _ ______ _| |__ | | ___
      / __/ _ \| |  _  // _ \/ __| |_  / _` | '_ \| |/ _ \
     | (_| (_) | | | \ \  __/\__ \ |/ / (_| | |_) | |  __/
      \___\___/|_|_|  \_\___||___/_/___\__,_|_.__/|_|\___|
-	 
+
 	v 1.3 - a jQuery plugin by Alvaro Prieto Lauroba
-	
+
 	Licences: MIT & GPL
-	Feel free to use or modify this plugin as far as my full name is kept	
-	
-	If you are going to use this plugin in production environments it is 
+	Feel free to use or modify this plugin as far as my full name is kept
+
+	If you are going to use this plugin in production environments it is
 	strongly recomended to use its minified version: colResizable.min.js
 
 */
 
 
-(function ($) {	
+(function ($) {
 	var d = $(document),
 	F = !1,
-	N=null,	
+	N=null,
 	drag = N,
 	tables = [],
 	count = 0,
@@ -29,7 +29,7 @@
 	SIGNATURE = "CRZ",
 	I = parseInt,
 	M = Math,
-	ie = $.browser.msie,
+	ie = navigator.userAgent.toLowerCase().match(/(msie)/),
 	width = "width",
 	attr = "attr",
 	divClass='<div class="',
@@ -47,18 +47,18 @@
 	left = 'left',
 	position = 'position',
 	styleEnd ="}</style>",
-	absolute = ':absolute;', 
+	absolute = ':absolute;',
 	imp = '!important;',
 	pa = 'padding-',
-	zi =':0px'+imp,	
+	zi =':0px'+imp,
 	S,
 	h = $("head")[append](style+".CRZ{table-layout:fixed;}.CRZ td,.CRZ th{"+pa+left+zi+pa+"right"+zi+"overflow:hidden}.CRC{height:0px;"+position+":relative;}.CRG{margin-left:-5px;"+position+absolute+"z-index:5;}.CRG .CRZ{"+position+absolute+"background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;top:0px}.CRL{"+position+absolute+"width:1px}.CRD{ border-left:1px dotted black"+styleEnd);
-	
+
 	try {
 		S = sessionStorage;
-	} catch (e) {}	
-	
-	
+	} catch (e) {}
+
+
 	function init(tb, options) {
 		var t = $(tb), marginLeft = "marginLeft", marginRight="marginRight", currentStyle ="currentStyle", border="border";
 		if (options.disable)
@@ -73,7 +73,7 @@
 		t.c = [];
 		t.w = t[width]();
 		t.gc = t.prev();
-		
+
 		if (options[marginLeft])
 			t.gc.css(marginLeft, options[marginLeft]);
 		if (options[marginRight])
@@ -83,7 +83,7 @@
 		tables[id] = t;
 		createGrips(t);
 	}
-	
+
 	function destroy(t) {
 		var id = t[attr](ID),
 		t = tables[id];
@@ -92,7 +92,7 @@
 		t[removeClass](SIGNATURE).gc.remove();
 		delete tables[id];
 	}
-	
+
 	function createGrips(t) {
 		var find="find",th = t[find](">thead>tr>th,>thead>tr>td"), length ="length";
 		if (!th[length])
@@ -126,7 +126,7 @@
 			$(this)[removeAttr](width);
 		});
 	}
-	
+
 	function memento(t, th) {
 		var w,
 		m = 0,
@@ -155,7 +155,7 @@
 			S[t.id] += m;
 		}
 	}
-	
+
 	function syncGrips(t) {
 		t.gc[width](t.w);
 		for (var i = 0; i < t.ln; i++) {
@@ -166,7 +166,7 @@
 			});
 		}
 	}
-	
+
 	function syncCols(t, i, isOver) {
 		var inc = drag.x - drag.l,
 		c = t.c[i],
@@ -182,8 +182,8 @@
 			c2.w = w2;
 		}
 	}
-	
-	
+
+
 	function onGripDrag(e) {
 		if (!drag)
 			return;
@@ -207,7 +207,7 @@
 			}
 		}
 		return F}
-	
+
 	function onGripDragOver(e) {
 		var unbind = "unbind";
 		d[unbind](mousemove + SIGNATURE)[unbind](mouseup + SIGNATURE);
@@ -229,7 +229,7 @@
 			memento(t);
 		drag = N;
 	}
-	
+
 	function onGripMouseDown(e) {
 		var o = $(this).data(SIGNATURE);
 		var t = tables[o.t],
@@ -248,7 +248,7 @@
 			}
 		return F;
 	}
-	
+
 
 	function onResize() {
 		for (t in tables) {
@@ -266,7 +266,7 @@
 			syncGrips(t[addClass](SIGNATURE));
 		}
 	}
-	
+
 	$(window)[bind]('resize.' + SIGNATURE, onResize);
 	$.fn[extend]({
 		colResizable : function (options) {
