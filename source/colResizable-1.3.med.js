@@ -161,8 +161,8 @@
 		for (var i = 0; i < t.ln; i++) {
 			var c = t.c[i];
 			t.g[i].css({
-				left : c.offset().left - t.offset()[left] + c.outerWidth() + t.cs / 2 + PX,
-				height : t.opt.headerOnly ? t.c[0].outerHeight() : t.outerHeight()
+				left : c.offset().left - t.offset()[left] + c.outerWidth(false) + t.cs / 2 + PX,
+				height : t.opt.headerOnly ? t.c[0].outerHeight(false) : t.outerHeight(false)
 			});
 		}
 	}
