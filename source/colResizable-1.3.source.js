@@ -150,7 +150,8 @@
 			var c = t.c[i]; 			
 			t.g[i].css({			//height and position of the grip is updated according to the table layout
 				left: c.offset().left - t.offset().left + c.outerWidth() + t.cs / 2 + PX,
-				height: t.opt.headerOnly? t.c[0].outerHeight() : t.outerHeight()				
+				height: t.opt.headerOnly? t.c[0].outerHeight() : t.outerHeight(),
+				display: c.is(":visible") ? 'block' : 'none'
 			});			
 		} 	
 	};
