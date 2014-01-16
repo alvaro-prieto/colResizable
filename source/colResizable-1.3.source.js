@@ -32,7 +32,6 @@
 	//shortcuts
 	var I = parseInt;
 	var M = Math;
-	var ie =$.browser.msie;
 	var S;
 	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
 	
@@ -55,8 +54,8 @@
 		t.opt = options; t.g = []; t.c = []; t.w = t.width(); t.gc = t.prev();	//t.c and t.g are arrays of columns and grips respectively				
 		if(options.marginLeft) t.gc.css("marginLeft", options.marginLeft);  	//if the table contains margins, it must be specified
 		if(options.marginRight) t.gc.css("marginRight", options.marginRight);  	//since there is no (direct) way to obtain margin values in its original units (%, em, ...)
-		t.cs = I(ie? tb.cellSpacing || tb.currentStyle.borderSpacing :t.css('border-spacing'))||2;	//table cellspacing (not even jQuery is fully cross-browser)
-		t.b  = I(ie? tb.border || tb.currentStyle.borderLeftWidth :t.css('border-left-width'))||1;	//outer border width (again cross-browser isues)
+		t.cs = I(t.css('border-spacing'))||2;	//table cellspacing (not even jQuery is fully cross-browser)
+		t.b  = I(t.css('border-left-width'))||1;	//outer border width (again cross-browser isues)
 		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pitty that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
 		tables[id] = t; 	//the table object is stored using its id as key	
 		createGrips(t);		//grips are created
