@@ -180,12 +180,15 @@
 	 */
 	var onGripDrag = function(e){	
 		if(!drag) return; var t = drag.t;		//table object reference 
+		
 		if (e.originalEvent.touches) {
 			var x = e.originalEvent.touches[0].pageX - drag.ox + drag.l;		//next position according to horizontal mouse position increment
 		} else {
 			var x = e.pageX - drag.ox + drag.l;		//next position according to horizontal mouse position increment
 		}
 		
+		
+			
 		var mw = t.opt.minWidth, i = drag.i ;	//cell's min width
 		var l = t.cs*1.5 + mw + t.b;
 
@@ -210,8 +213,7 @@
 	 */
 	var onGripDragOver = function(e){	
 		
-		d.unbind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE);
-		d.unbind('touchmove. '+SIGNATURE+' mousemove.'+SIGNATURE);
+		d.unbind('touchend mouseup').unbind('touchmove mousemove');
 		$("head :last-child").remove(); 				//remove the dragging cursor style	
 		if(!drag) return;
 		drag.removeClass(drag.t.opt.draggingClass);		//remove the grip's dragging css-class
@@ -242,8 +244,7 @@
 			g.ox = e.pageX;	//the initial position is kept
 		}
 		g.l = g.position().left;
-		d.bind('touchmove. '+SIGNATURE+' mousemove.'+SIGNATURE, onGripDrag);	//mousemove and mouseup events are bound
-		d.bind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE,onGripDragOver);	//mousemove and mouseup events are bound
+		d.bind('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE, onGripDrag).bind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE,onGripDragOver);	//mousemove and mouseup events are bound
 		h.append("<style type='text/css'>*{cursor:"+ t.opt.dragCursor +"!important}</style>"); 	//change the mouse cursor
 		g.addClass(t.opt.draggingClass); 	//add the dragging class (to allow some visual feedback)				
 		drag = g;							//the current grip is stored as the current dragging object
