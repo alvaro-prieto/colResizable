@@ -213,7 +213,7 @@
 	 */
 	var onGripDragOver = function(e){	
 		
-		d.unbind('touchend mouseup').unbind('touchmove mousemove');
+		d.unbind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE).unbind('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE);
 		$("head :last-child").remove(); 				//remove the dragging cursor style	
 		if(!drag) return;
 		drag.removeClass(drag.t.opt.draggingClass);		//remove the grip's dragging css-class
@@ -222,8 +222,6 @@
 		if(drag.x){ 									//only if the column width has been changed
 			syncCols(t,drag.i, true);	syncGrips(t);	//the columns and grips are updated
 			if (cb) { e.currentTarget = t[0]; cb(e); }	//if there is a callback function, it is fired
-		} else {
-			//alert('nao');
 		}
 		if(t.p && S) memento(t); 						//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
 		drag = null;									//since the grip's dragging is over									
