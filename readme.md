@@ -1,10 +1,10 @@
-![alt text](http://quocity.com/colresizable/githubLogo.png "colResizable jQuery plugin")
+![alt text](http://bacubacu.com/colresizable/githubLogo.png "colResizable jQuery plugin")
 
 # colResizable
 
 colResizable is a jQuery plugin designed to enhance HTML tables adding column resizing features by dragging column anchors manually. It is tiny in size (colResizable v1.0 is only 2.8kb) and it doesn´t require any other library dependencies such as jQuery-UI or others. It is fully compatible with all major browsers (IE7+, Firefox, Chrome and Opera), and works perfectly with both percentage and pixel-based table layouts. colResizable can also be used as multiple range slider.
 
-#### [official website](http://quocity.com/colresizable/) &nbsp;&nbsp;&nbsp;&nbsp; [demos](http://quocity.com/colresizable/#samples) &nbsp;&nbsp;&nbsp;&nbsp; [documentation](http://quocity.com/colresizable/#attributes) &nbsp;&nbsp;&nbsp;&nbsp; [downloads](http://quocity.com/colresizable/#download) 
+#### [official website](http://bacubacu.com/colresizable/) &nbsp;&nbsp;&nbsp;&nbsp; [demos](http://bacubacu.com/colresizable/#samples) &nbsp;&nbsp;&nbsp;&nbsp; [documentation](http://bacubacu.com/colresizable/#attributes) &nbsp;&nbsp;&nbsp;&nbsp; [downloads](http://bacubacu.com/colresizable/#download) 
 
 ## Features
 colResizable was developed since no other similar plugin with the below listed features was found:
