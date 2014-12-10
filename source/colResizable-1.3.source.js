@@ -32,7 +32,6 @@
 	//shortcuts
 	var I = parseInt;
 	var M = Math;
-	var ie =$.browser.msie;
 	var S;
 	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
 	
@@ -55,8 +54,8 @@
 		t.opt = options; t.g = []; t.c = []; t.w = t.width(); t.gc = t.prev();	//t.c and t.g are arrays of columns and grips respectively				
 		if(options.marginLeft) t.gc.css("marginLeft", options.marginLeft);  	//if the table contains margins, it must be specified
 		if(options.marginRight) t.gc.css("marginRight", options.marginRight);  	//since there is no (direct) way to obtain margin values in its original units (%, em, ...)
-		t.cs = I(ie? tb.cellSpacing || tb.currentStyle.borderSpacing :t.css('border-spacing'))||2;	//table cellspacing (not even jQuery is fully cross-browser)
-		t.b  = I(ie? tb.border || tb.currentStyle.borderLeftWidth :t.css('border-left-width'))||1;	//outer border width (again cross-browser isues)
+		t.cs = I(t.css('border-spacing'))||2;	//table cellspacing (not even jQuery is fully cross-browser)
+		t.b  = I(t.css('border-left-width'))||1;	//outer border width (again cross-browser isues)
 		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pitty that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
 		tables[id] = t; 	//the table object is stored using its id as key	
 		createGrips(t);		//grips are created
@@ -93,8 +92,9 @@
 			g.t = t; g.i = i; g.c = c;	c.w =c.width();		//some values are stored in the grip's node data
 			t.g.push(g); t.c.push(c);						//the current grip and column are added to its table object
 			c.width(c.w).removeAttr("width");				//the width of the column is converted into pixel-based measurements
-			if (i < t.ln-1)	g.mousedown(onGripMouseDown).append(t.opt.gripInnerHtml).append('<div class="'+SIGNATURE+'" style="cursor:'+t.opt.hoverCursor+'"></div>'); //bind the mousedown event to start dragging 
-			else g.addClass("JCLRLastGrip").removeClass("JCLRgrip");	//the last grip is used only to store data			
+			if (i < t.ln-1) {
+				g.bind('touchstart mousedown', onGripMouseDown).append(t.opt.gripInnerHtml).append('<div class="'+SIGNATURE+'" style="cursor:'+t.opt.hoverCursor+'"></div>'); //bind the mousedown event to start dragging 
+			} else g.addClass("JCLRLastGrip").removeClass("JCLRgrip");	//the last grip is used only to store data			
 			g.data(SIGNATURE, {i:i, t:t.attr(ID)});						//grip index and its table name are stored in the HTML 												
 		}); 	
 		t.cg.removeAttr("width");	//remove the width attribute from elements in the colgroup (in any)
@@ -180,7 +180,15 @@
 	 */
 	var onGripDrag = function(e){	
 		if(!drag) return; var t = drag.t;		//table object reference 
-		var x = e.pageX - drag.ox + drag.l;		//next position according to horizontal mouse position increment
+		
+		if (e.originalEvent.touches) {
+			var x = e.originalEvent.touches[0].pageX - drag.ox + drag.l;		//next position according to horizontal mouse position increment
+		} else {
+			var x = e.pageX - drag.ox + drag.l;		//next position according to horizontal mouse position increment
+		}
+		
+		
+			
 		var mw = t.opt.minWidth, i = drag.i ;	//cell's min width
 		var l = t.cs*1.5 + mw + t.b;
 
@@ -205,15 +213,16 @@
 	 */
 	var onGripDragOver = function(e){	
 		
-		d.unbind('mousemove.'+SIGNATURE).unbind('mouseup.'+SIGNATURE);
+		d.unbind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE).unbind('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE);
 		$("head :last-child").remove(); 				//remove the dragging cursor style	
 		if(!drag) return;
 		drag.removeClass(drag.t.opt.draggingClass);		//remove the grip's dragging css-class
-		var t = drag.t, cb = t.opt.onResize; 			//get some values	
+		var t = drag.t;
+		var cb = t.opt.onResize; 			//get some values	
 		if(drag.x){ 									//only if the column width has been changed
 			syncCols(t,drag.i, true);	syncGrips(t);	//the columns and grips are updated
 			if (cb) { e.currentTarget = t[0]; cb(e); }	//if there is a callback function, it is fired
-		}	
+		}
 		if(t.p && S) memento(t); 						//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
 		drag = null;									//since the grip's dragging is over									
 	};	
@@ -227,8 +236,13 @@
 	var onGripMouseDown = function(e){
 		var o = $(this).data(SIGNATURE);			//retrieve grip's data
 		var t = tables[o.t],  g = t.g[o.i];			//shortcuts for the table and grip objects
-		g.ox = e.pageX;	g.l = g.position().left;	//the initial position is kept				
-		d.bind('mousemove.'+SIGNATURE, onGripDrag).bind('mouseup.'+SIGNATURE,onGripDragOver);	//mousemove and mouseup events are bound
+		if (e.originalEvent.touches) {
+			g.ox = e.originalEvent.touches[0].pageX;
+		} else {
+			g.ox = e.pageX;	//the initial position is kept
+		}
+		g.l = g.position().left;
+		d.bind('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE, onGripDrag).bind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE,onGripDragOver);	//mousemove and mouseup events are bound
 		h.append("<style type='text/css'>*{cursor:"+ t.opt.dragCursor +"!important}</style>"); 	//change the mouse cursor
 		g.addClass(t.opt.draggingClass); 	//add the dragging class (to allow some visual feedback)				
 		drag = g;							//the current grip is stored as the current dragging object
