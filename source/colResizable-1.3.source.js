@@ -33,8 +33,7 @@
 	var I = parseInt;
 	var M = Math;
 	var ie =$.browser.msie;
-	var S;
-	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
+	var S = localStorage;
 	
 	//append required CSS rules  
 	h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer td, .JColResizer th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	}</style>");
@@ -86,7 +85,7 @@
 		if(!th.length) th = t.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");	 //but headers can also be included in different ways
 		t.cg = t.find("col"); 						//a table can also contain a colgroup with col elements		
 		t.ln = th.length;							//table length is stored	
-		if(t.p && S && S[t.id])memento(t,th);		//if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
+		if(t && S && S[t.id])memento(t,th);		//if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
 		th.each(function(i){						//iterate through the table column headers			
 			var c = $(this); 						//jquery wrap for the current column			
 			var g = $(t.gc.append('<div class="JCLRgrip"></div>')[0].lastChild); //add the visual node to be used as grip
@@ -122,7 +121,7 @@
 			if(t.opt.flush){ S[t.id] =""; return;} 	//if flush is activated, stored data is removed
 			w = S[t.id].split(";");					//column widths is obtained
 			for(;i<t.ln;i++){						//for each column
-				aux.push(100*w[i]/w[t.ln]+"%"); 	//width is stored in an array since it will be required again a couple of lines ahead
+				aux.push(100*w[i]/w[t.ln - 1]+"%"); 	//width is stored in an array since it will be required again a couple of lines ahead
 				th.eq(i).css("width", aux[i] ); 	//each column width in % is resotred
 			}			
 			for(i=0;i<t.ln;i++)
@@ -130,7 +129,13 @@
 		}else{							//in serialization mode (after resizing a column)
 			S[t.id] ="";				//clean up previous data
 			for(i in t.c){				//iterate through columns
-				w = t.c[i].width();		//width is obtained
+				if(t.c[i].width) {
+					w = t.c[i].width();		//width is obtained
+				}
+				else {
+					w = t.c[i].w;		//width is obtained
+				}
+				
 				S[t.id] += w+";";		//width is appended to the sessionStorage object using ID as key
 				m+=w;					//carriage is updated to obtain the full size used by columns
 			}
@@ -214,7 +219,7 @@
 			syncCols(t,drag.i, true);	syncGrips(t);	//the columns and grips are updated
 			if (cb) { e.currentTarget = t[0]; cb(e); }	//if there is a callback function, it is fired
 		}	
-		if(t.p && S) memento(t); 						//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
+		if(t && S) memento(t); 						//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
 		drag = null;									//since the grip's dragging is over									
 	};	
 	
@@ -242,19 +247,25 @@
 	 */
 	var onResize = function(){
 		for(t in tables){		
-			var t = tables[t], i, mw=0;				
-			t.removeClass(SIGNATURE);						//firefox doesnt like layout-fixed in some cases
-			if (t.w != t.width()) {							//if the the table's width has changed
-				t.w = t.width();							//its new value is kept
-				for(i=0; i<t.ln; i++) mw+= t.c[i].w;		//the active cells area is obtained
-				//cell rendering is not as trivial as it might seem, and it is slightly different for
-				//each browser. In the begining i had a big switch for each browser, but since the code
-				//was extremelly ugly now I use a different approach with several reflows. This works 
-				//pretty well but it's a bit slower. For now, lets keep things simple...   
-				for(i=0; i<t.ln; i++) t.c[i].css("width", M.round(1000*t.c[i].w/mw)/10 + "%").l=true; 
-				//c.l locks the column, telling us that its c.w is outdated									
+			var t = tables[t], i, mw=0;
+			if(t) {
+				if(t.removeClass) {
+					t.removeClass(SIGNATURE);						//firefox doesnt like layout-fixed in some cases
+				}
+				if (t.width && t.w != t.width()) {							//if the the table's width has changed
+					t.w = t.width();							//its new value is kept
+					for(i=0; i<t.ln; i++) mw+= t.c[i].w;		//the active cells area is obtained
+					//cell rendering is not as trivial as it might seem, and it is slightly different for
+					//each browser. In the begining i had a big switch for each browser, but since the code
+					//was extremelly ugly now I use a different approach with several reflows. This works 
+					//pretty well but it's a bit slower. For now, lets keep things simple...   
+					for(i=0; i<t.ln; i++) t.c[i].css("width", M.round(1000*t.c[i].w/mw)/10 + "%").l=true; 
+					//c.l locks the column, telling us that its c.w is outdated									
+				}
+				if(t.addClass) {
+					syncGrips(t.addClass(SIGNATURE));
+				}
 			}
-			syncGrips(t.addClass(SIGNATURE));
 		}
 	};		
 
