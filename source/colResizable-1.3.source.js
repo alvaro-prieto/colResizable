@@ -129,7 +129,8 @@
 				t.cg.eq(i).css("width", aux[i]);	//this code is required in order to create an inline CSS rule with higher precedence than an existing CSS class in the "col" elements
 		}else{							//in serialization mode (after resizing a column)
 			S[t.id] ="";				//clean up previous data
-			for(i in t.c){				//iterate through columns
+			for(;i < t.c.length; i++){		//iterate through columns
+			
 				w = t.c[i].width();		//width is obtained
 				S[t.id] += w+";";		//width is appended to the sessionStorage object using ID as key
 				m+=w;					//carriage is updated to obtain the full size used by columns
@@ -255,8 +256,8 @@
 	 * table layout according to the browser's size synchronizing related grips 
 	 */
 	var onResize = function(){
-		for(t in tables){		
-			var t = tables[t], i, mw=0;				
+		for (var ix = 0; ix < tables.length; ix++) {
+			var t = tables[ix], i, mw = 0;
 			t.removeClass(SIGNATURE);						//firefox doesnt like layout-fixed in some cases
 			if (t.w != t.width()) {							//if the the table's width has changed
 				t.w = t.width();							//its new value is kept
