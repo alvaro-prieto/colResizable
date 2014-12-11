@@ -85,7 +85,7 @@
 		if(!th.length) th = t.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");	 //but headers can also be included in different ways
 		t.cg = t.find("col"); 						//a table can also contain a colgroup with col elements		
 		t.ln = th.length;							//table length is stored	
-		if(t && S && S[t.id])memento(t,th);		//if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
+		if(t.p && S && S[t.id])memento(t,th);		//if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
 		th.each(function(i){						//iterate through the table column headers			
 			var c = $(this); 						//jquery wrap for the current column			
 			var g = $(t.gc.append('<div class="JCLRgrip"></div>')[0].lastChild); //add the visual node to be used as grip
@@ -219,7 +219,7 @@
 			syncCols(t,drag.i, true);	syncGrips(t);	//the columns and grips are updated
 			if (cb) { e.currentTarget = t[0]; cb(e); }	//if there is a callback function, it is fired
 		}	
-		if(t && S) memento(t); 						//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
+		if(t.p && S) memento(t); 						//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
 		drag = null;									//since the grip's dragging is over									
 	};	
 	
