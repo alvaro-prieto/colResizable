@@ -2,21 +2,21 @@
 
 # colResizable
 
-colResizable is a jQuery plugin designed to enhance HTML tables adding column resizing features by dragging column anchors manually. It is tiny in size (colResizable v1.0 is only 2.8kb) and it doesn´t require any other library dependencies such as jQuery-UI or others. It is fully compatible with all major browsers (IE7+, Firefox, Chrome and Opera), and works perfectly with both percentage and pixel-based table layouts. colResizable can also be used as multiple range slider.
+colResizable is a free jQuery plugin designed to enhance any kind of HTML table object adding column resizing features by dragging column anchors manually. It is compatible with both mouse and touch devices and has some nice features such as layout persistence after page refresh or postback and compatibility with both percentage and pixel-based table layouts. It is tiny in size (colResizable 1.0 is only 2kb) and it is fully compatible with all major browsers(IE7+, Firefox, Chrome and Opera). 
 
 #### [official website](http://bacubacu.com/colresizable/) &nbsp;&nbsp;&nbsp;&nbsp; [demos](http://bacubacu.com/colresizable/#samples) &nbsp;&nbsp;&nbsp;&nbsp; [documentation](http://bacubacu.com/colresizable/#attributes) &nbsp;&nbsp;&nbsp;&nbsp; [downloads](http://bacubacu.com/colresizable/#download) 
 
 ## Features
 colResizable was developed since no other similar plugin with the below listed features was found:
 
-* Small footprint
-* No other library dependencies
-* Column resizing not altering total table width
+* Compatible with mouse and touch devices (PC, tablets, and mobile phones)
 * Compatibility with both percentage and pixel-based table layouts
+* Column resizing not altering total table width (optional)
 * No external resources needed (such as images or stylesheets)
+* Optional layout persistence after page refresh or postback
 * Customization of column anchors
-* Layout restoration after postback 
-* Cross-browser compatibility
+* Small footprint
+* Cross-browser compatibility (IE7+, Chrome, Safari, Firefox)
 * Events
 
 
@@ -35,6 +35,11 @@ To use this plugin a script reference must be added to the colResizable.min.js f
 
 When set to true the table layout is updated while dragging column anchors. liveDrag enabled is more CPU consuming so it is not recommended for slow computers, specially when dealing with huge or extremely complicated tables.
 
+___
+
+* **postbackSafe**: [type: boolean] [default: false] [version: 1.3] 
+
+This attribute can be used to specify that the manually selected column widths must remain unaltered after a postback or browser refresh. This feature is mainly oriented to those pages created with server-side logic (codebehind), such as PHP or .NET, and it is only compatible with browsers with sessionStorage support (all modern browsers). However, if you are targeting older browsers (such as IE7 and IE8) you can still emulate sessionStorage using sessionStorage.js. It is important to note that some browsers (IE and FF) doesn’t enable the sessionStorage object while running the website directly from the local file system, so if you want to test this feature it is recommended to view the website through a web server or use browsers such as Chrome or Opera which doesn’t have this limitation. Don't worry about compatibility issues, once your site is up on the internet, all browsers will act in exactly the same way.
 ___
 
 * **innerGripHtml**: [type: string] [default: empty string] [version: 1.0] 
@@ -70,11 +75,6 @@ ___
 * **dragCursor**: [type: string] [default: "e-resize"] [version: 1.3] 
 
 Defines the cursor that will be used while the user is resizing a column.
-___
-
-* **postbackSafe**: [type: boolean] [default: false] [version: 1.3] 
-
-This attribute can be used to specify that the manually selected column widths must remain unaltered after a postback or browser refresh. This feature is mainly oriented to those pages created with server-side logic (codebehind), such as PHP or .NET, and it is only compatible with browsers with sessionStorage support (all modern browsers). However, if you are targeting older browsers (such as IE7 and IE8) you can still emulate sessionStorage using sessionStorage.js. It is important to note that some browsers (IE and FF) doesn’t enable the sessionStorage object while running the website directly from the local file system, so if you want to test this feature it is recommended to view the website through a web server or use browsers such as Chrome or Opera which doesn’t have this limitation. Don't worry about compatibility issues, once your site is up on the internet, all browsers will act in exactly the same way.
 ___
 
 * **flush**: [type: boolean] [default: false] [version: 1.3] 
