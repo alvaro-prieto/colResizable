@@ -37,9 +37,21 @@ When set to true the table layout is updated while dragging column anchors. live
 
 ___
 
+*  **fixed**: [type: boolean] [default: true] [version: 1.5] 
+
+It is used to set how the resize method works. In fixed mode resizing a column does not alter total table width, which means that when a column is expanded the next one shrinks. If fixed is set to false then table can change its width and each column can shrink or expand independently.
+
+___
+
 * **postbackSafe**: [type: boolean] [default: false] [version: 1.3] 
 
 This attribute can be used to specify that the manually selected column widths must remain unaltered after a postback or browser refresh. This feature is mainly oriented to those pages created with server-side logic (codebehind), such as PHP or .NET, and it is only compatible with browsers with sessionStorage support (all modern browsers). However, if you are targeting older browsers (such as IE7 and IE8) you can still emulate sessionStorage using sessionStorage.js. It is important to note that some browsers (IE and FF) doesn’t enable the sessionStorage object while running the website directly from the local file system, so if you want to test this feature it is recommended to view the website through a web server or use browsers such as Chrome or Opera which doesn’t have this limitation. Don't worry about compatibility issues, once your site is up on the internet, all browsers will act in exactly the same way.
+___
+
+*  **partialRefresh**: [type: boolean] [default: false] [version: 1.5] 
+
+This attribute should be set to true if the table is inside of an updatePanel or any other kind of partial page refresh using ajax. Table's ID should be same before and after the partial partial refresh.
+
 ___
 
 * **innerGripHtml**: [type: string] [default: empty string] [version: 1.0] 
