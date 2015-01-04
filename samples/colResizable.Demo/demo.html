@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>colResizable demo</title>  
+
+  <link rel="stylesheet" type="text/css" href="css/main.css" />  
+  <script  src="js/jquery.js"></script>
+  <script  src="js/colResizable-1.5.min.js"></script>
+  <script type="text/javascript">
+	$(function(){	
+
+		var onSampleResized = function(e){
+			var columns = $(e.currentTarget).find("th");
+			var msg = "columns widths: ";
+			columns.each(function(){ msg += $(this).width() + "px; "; })
+			$("#sample2Txt").html(msg);
+			
+		};	
+	
+		$("#sample2").colResizable({
+			liveDrag:true, 
+			gripInnerHtml:"<div class='grip'></div>", 
+			draggingClass:"dragging", 
+			onResize:onSampleResized});
+		
+	});	
+  </script>
+  
+</head>
+<body>
+	<div class="center" >
+	
+		 <br/><br/>
+						
+		 <table id="sample2" width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<th>header</th><th>header</th><th>header</th>
+			</tr>
+			<tr>
+				<td class="left">cell</td><td>cell</td><td class="right">cell</td>
+			</tr>
+			<tr>
+				<td class="left">cell</td><td>cell</td><td class="right">cell</td>
+			</tr>
+			<tr>
+				<td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
+			</tr>																	
+		</table>
+		
+		<br/>
+		
+		<div class="sampleText">
+			<label id="sample2Txt">Drag the columns to start</label>				
+		</div>
+		
+		<br/><br/>
+
+	</div>	
+		
+
+	
+		
+ </body>
+ </html>
