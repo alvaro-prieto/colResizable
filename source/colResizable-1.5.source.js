@@ -21,7 +21,7 @@
 	var d = $(document); 		//window object
 	var h = $("head");			//head object
 	var drag = null;			//reference to the current grip that is being dragged
-	var tables = [];			//array of the already processed tables (table.id as key)
+	var tables = {};			//object of the already processed tables (table.id as key)
 	var	count = 0;				//internal count to create unique IDs when needed.	
 	
 	//common strings for packing
