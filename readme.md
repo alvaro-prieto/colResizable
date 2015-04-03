@@ -102,6 +102,11 @@ ___
 * **marginRight**: [type: string / null] [default: null] [version: 1.3] 
 
 It behaves in exactly the same way than the previous attribute but applied to the right margin.
+___
+
+* **keepOriginalColumnWidths**: [type: boolean] [default: false] [version: 1.3] 
+
+If set to true, it gives the ability to keep the original column widths of the table.
  
 ## Events
 
