@@ -306,8 +306,8 @@
 	 * table layout according to the browser's size synchronizing related grips 
 	 */
 	var onResize = function(){
-		for(t in tables){		
-			var t = tables[t], i, mw=0;				
+		for(var ti = 0; ti < tables.length; ti++){
+			var t = tables[ti], i, mw=0;
 			t.removeClass(SIGNATURE);						//firefox doesn't like layout-fixed in some cases
 			if (t.f && t.w != t.width()) {					//if the the table's width has changed and it is in fixed mode
 				t.w = t.width();							//its new value is kept the active cells area is obtained
