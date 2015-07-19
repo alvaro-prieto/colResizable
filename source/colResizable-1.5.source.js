@@ -133,7 +133,12 @@
 			if(t.opt.flush){ S[t.id] =""; return;} 	//if flush is activated, stored data is removed
 			w = S[t.id].split(";");					//column widths is obtained
 			tw = w[t.ln+1];
-			if(!t.f && tw)	t.width(tw);			//it not fixed and table width data available its size is restored
+			if(!t.f && tw){							//if not fixed and table width data available its size is restored
+				t.width(tw);
+				if(t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
+					t.css('min-width', t.w + inc);
+				}
+			}
 			for(;i<t.ln;i++){						//for each column
 				aux.push(100*w[i]/w[t.ln]+"%"); 	//width is stored in an array since it will be required again a couple of lines ahead
 				th.eq(i).css("width", aux[i] ); 	//each column width in % is restored
@@ -188,7 +193,7 @@
             c2.width(w2 + PX);
             t.cg.eq(i+1).width( w2 + PX);
         }
-        else if(t.opt.overflow){
+        else if(t.opt.overflow) {				//if overflow is set, incriment min-width to force overflow
             t.css('min-width', t.w + inc);
         }
 		if(isOver){
@@ -244,7 +249,7 @@
 		if(t.opt.liveDrag){ 			//if liveDrag is enabled
 			if(last){
 			    c.width(drag.w);
-                if(!t.f && t.opt.overflow){
+                if(!t.f && t.opt.overflow){			//if overflow is set, incriment min-width to force overflow
                     t.css('min-width', t.w + x - drag.l);
                 }
                 else {
