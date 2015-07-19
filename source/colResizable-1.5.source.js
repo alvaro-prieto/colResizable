@@ -136,7 +136,8 @@
 			if(!t.f && tw){							//if not fixed and table width data available its size is restored
 				t.width(tw);
 				if(t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
-					t.css('min-width', tw);
+					t.css('min-width', tw + PX);
+					t.w = tw*1;
 				}
 			}
 			for(;i<t.ln;i++){						//for each column
