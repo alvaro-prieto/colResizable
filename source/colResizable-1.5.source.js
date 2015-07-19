@@ -188,6 +188,9 @@
             c2.width(w2 + PX);
             t.cg.eq(i+1).width( w2 + PX);
         }
+        else if(t.opt.overflow){
+            t.css('min-width', t.w + inc);
+        }
 		if(isOver){
             c.w=w; 
             c2.w= t.f ? w2 : c2.w;
@@ -205,7 +208,7 @@
         var w = $.map(t.c, function(c){			//obtain real widths
             return c.width();
         });
-        t.width(t.width()).removeClass(FLEX);	//prevent table width changes
+        t.width(t.w = t.width()).removeClass(FLEX);	//prevent table width changes
         $.each(t.c, function(i,c){
             c.width(w[i]).w = w[i];				//set column widths applying bounds (table's max-width)
         });
@@ -241,7 +244,12 @@
 		if(t.opt.liveDrag){ 			//if liveDrag is enabled
 			if(last){
 			    c.width(drag.w);
-                t.w = t.width();
+                if(t.f && t.opt.overflow){
+                    t.css('min-width', t.w + x - drag.l);
+                }
+                else {
+                	t.w = t.width();
+                }
 			}else{
 				syncCols(t,i); 			//columns are synchronized
 			}
@@ -342,6 +350,7 @@
 				gripInnerHtml: '',				//if it is required to use a custom grip it can be done using some custom HTML				
 				liveDrag: false,				//enables table-layout updating while dragging	
                 fixed: true,                    //table width does not change if columns are resized
+                overflow: false,				//allows to resize collumns with overflow of parent container. makes sense only in fixed mode
 				minWidth: 15, 					//minimum width value in pixels allowed for a column 
 				headerOnly: false,				//specifies that the size of the the column resizing anchors will be bounded to the size of the first row 
 				hoverCursor: "e-resize",  		//cursor to be used on grip hover
@@ -364,4 +373,3 @@
         }
     });
 })(jQuery);
-
