@@ -244,7 +244,7 @@
 		if(t.opt.liveDrag){ 			//if liveDrag is enabled
 			if(last){
 			    c.width(drag.w);
-                if(t.f && t.opt.overflow){
+                if(!t.f && t.opt.overflow){
                     t.css('min-width', t.w + x - drag.l);
                 }
                 else {
@@ -350,7 +350,7 @@
 				gripInnerHtml: '',				//if it is required to use a custom grip it can be done using some custom HTML				
 				liveDrag: false,				//enables table-layout updating while dragging	
                 fixed: true,                    //table width does not change if columns are resized
-                overflow: false,				//allows to resize collumns with overflow of parent container. makes sense only in fixed mode
+                overflow: false,				//allows to resize collumns with overflow of parent container. makes sense only in unfixed mode
 				minWidth: 15, 					//minimum width value in pixels allowed for a column 
 				headerOnly: false,				//specifies that the size of the the column resizing anchors will be bounded to the size of the first row 
 				hoverCursor: "e-resize",  		//cursor to be used on grip hover
