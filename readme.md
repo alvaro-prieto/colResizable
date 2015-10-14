@@ -40,6 +40,7 @@ ___
 *  **fixed**: [type: boolean] [default: true] [version: 1.5] 
 
 It is used to set how the resize method works. In fixed mode resizing a column does not alter total table width, which means that when a column is expanded the next one shrinks. If fixed is set to false then table can change its width and each column can shrink or expand independently.
+_Note: There is a known issue where `table-layout: fixed;` causes a minor bug with resizing table widths. It is important to note that the `fixed` setting is different from the CSS property and it is encouraged not to apply that rule in your CSS._
 
 ___
 
