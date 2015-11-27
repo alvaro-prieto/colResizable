@@ -325,8 +325,12 @@
 	};		
 
 
-	//bind resize event, to update grips position 
-	$(window).bind('resize.'+SIGNATURE, onResize); 
+	//bind resize event, to update grips position
+	// Check that tables are present first before binding
+	// resize event to the window.
+	if(tables.length > 0) {
+		$(window).bind('resize.'+SIGNATURE, onResize);
+	}
 
 
 	/**
