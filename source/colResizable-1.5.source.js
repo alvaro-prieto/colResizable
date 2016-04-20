@@ -88,6 +88,7 @@
 		var th = t.find(">thead>tr>th,>thead>tr>td");	//if table headers are specified in its semantically correct tag, are obtained
 		if(!th.length) th = t.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");	 //but headers can also be included in different ways
 		th = th.filter(":visible");					//filter invisible columns
+		if (t.opt.skipColumnClass) th = th.filter(':not(.'+t.opt.skipColumnClass+')'); //filter skipped columns
 		t.cg = t.find("col"); 						//a table can also contain a colgroup with col elements		
 		t.ln = th.length;							//table length is stored	
 		if(t.p && S && S[t.id])memento(t,th);		//if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
@@ -353,6 +354,7 @@
 				marginRight: null, 				//in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel
+				skipColumnClass: false,			//jquery selector of columns to leave non-resizable
 				
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
