@@ -134,7 +134,13 @@
 			if(t.opt.flush){ S[t.id] =""; return;} 	//if flush is activated, stored data is removed
 			w = S[t.id].split(";");					//column widths is obtained
 			tw = w[t.ln+1];
-			if(!t.f && tw)	t.width(tw);			//it not fixed and table width data available its size is restored
+            if(!t.f && tw){							//if not fixed and table width data available its size is restored
+                t.width(tw);
+                if(t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
+                    t.css('min-width', tw + PX);
+                    t.w = tw*1;
+                }
+            }
 			for(;i<t.ln;i++){						//for each column
 				aux.push(100*w[i]/w[t.ln]+"%"); 	//width is stored in an array since it will be required again a couple of lines ahead
 				th.eq(i).css("width", aux[i] ); 	//each column width in % is restored
@@ -188,6 +194,8 @@
         if(t.f){ //if fixed mode
             c2.width(w2 + PX);
             t.cg.eq(i+1).width( w2 + PX);
+        }else if(t.opt.overflow) {				//if overflow is set, incriment min-width to force overflow
+            t.css('min-width', t.w + inc);
         }
 		if(isOver){
             c.w=w; 
@@ -206,7 +214,7 @@
         var w = $.map(t.c, function(c){			//obtain real widths
             return c.width();
         });
-        t.width(t.width()).removeClass(FLEX);	//prevent table width changes
+        t.width(t.w = t.width()).removeClass(FLEX);	//prevent table width changes
         $.each(t.c, function(i,c){
             c.width(w[i]).w = w[i];				//set column widths applying bounds (table's max-width)
         });
@@ -242,7 +250,11 @@
 		if(t.opt.liveDrag){ 			//if liveDrag is enabled
 			if(last){
 			    c.width(drag.w);
-                t.w = t.width();
+                if(!t.f && t.opt.overflow){			//if overflow is set, incriment min-width to force overflow
+                   t.css('min-width', t.w + x - drag.l);
+                }else {
+                    t.w = t.width();
+                }
 			}else{
 				syncCols(t,i); 			//columns are synchronized
 			}
@@ -360,12 +372,14 @@
 				marginRight: null, 				//in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel
+                overflow: false,				//allows to resize collumns with overflow of parent container. 
 				
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
 				onResize: null					//callback function fired when the dragging process is over
             }			
-			var options =  $.extend(defaults, options);			
+			var options =  $.extend(defaults, options);		
+            if(options.overflow) options.fixed = false;
             return this.each(function() {				
              	init( this, options);             
             });
