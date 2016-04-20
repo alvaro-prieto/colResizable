@@ -1,0 +1,16 @@
+{
+"name": "col-resizable-jlopezh",
+"homepage": "https://github.com/alvaro-prieto/colResizable",
+"main": [
+"./colResizable-1.5.min.js"
+],
+"_release": "5d19b8f9a2",
+"_resolution": {
+"type": "branch",
+"branch": "master",
+"commit": "5d19b8f9a22e7695cfc1e49fe1a0241ea259fd87"
+},
+"_source": "https://github.com/alvaro-prieto/colResizable.git",
+"_target": "*",
+"_originalSource": "col-resizable"
+}
