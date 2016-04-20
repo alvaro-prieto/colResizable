@@ -21,7 +21,7 @@
 	var d = $(document); 		//window object
 	var h = $("head");			//head object
 	var drag = null;			//reference to the current grip that is being dragged
-	var tables = {};			//object of the already processed tables (table.id as key)
+	var tables = [];			//array of the already processed tables (table.id as key)
 	var	count = 0;				//internal count to create unique IDs when needed.	
 	
 	//common strings for packing
@@ -38,7 +38,7 @@
 	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
 	
 	//append required CSS rules  
-	h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;}</style>");
+	h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer td, .JColResizer th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;}</style>");
 
 	
 	/**
@@ -307,8 +307,8 @@
 	 * table layout according to the browser's size synchronizing related grips 
 	 */
 	var onResize = function(){
-		for(var ti = 0; ti < tables.length; ti++){
-			var t = tables[ti], i, mw=0;
+		for(t in tables){		
+			var t = tables[t], i, mw=0;				
 			t.removeClass(SIGNATURE);						//firefox doesn't like layout-fixed in some cases
 			if (t.f && t.w != t.width()) {					//if the the table's width has changed and it is in fixed mode
 				t.w = t.width();							//its new value is kept the active cells area is obtained
@@ -353,8 +353,10 @@
 				marginRight: null, 				//in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel
-				
-				//events:
+				hscroll: false,                 //it allows to increase the table width exceeding the viewport width
+
+                
+                //events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
 				onResize: null					//callback function fired when the dragging process is over
             }			
