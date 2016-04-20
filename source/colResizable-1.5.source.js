@@ -134,7 +134,13 @@
 			if(t.opt.flush){ S[t.id] =""; return;} 	//if flush is activated, stored data is removed
 			w = S[t.id].split(";");					//column widths is obtained
 			tw = w[t.ln+1];
-			if(!t.f && tw)	t.width(tw);			//it not fixed and table width data available its size is restored
+			if(!t.f && tw){							//if not fixed and table width data available its size is restored
+				t.width(tw);
+				if(t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
+					t.css('min-width', tw + PX);
+					t.w = tw*1;
+				}
+			}
 			for(;i<t.ln;i++){						//for each column
 				aux.push(100*w[i]/w[t.ln]+"%"); 	//width is stored in an array since it will be required again a couple of lines ahead
 				th.eq(i).css("width", aux[i] ); 	//each column width in % is restored
@@ -189,6 +195,9 @@
             c2.width(w2 + PX);
             t.cg.eq(i+1).width( w2 + PX);
         }
+        else if(t.opt.overflow) {				//if overflow is set, incriment min-width to force overflow
+            t.css('min-width', t.w + inc);
+        }
 		if(isOver){
             c.w=w; 
             c2.w= t.f ? w2 : c2.w;
@@ -206,7 +215,7 @@
         var w = $.map(t.c, function(c){			//obtain real widths
             return c.width();
         });
-        t.width(t.width()).removeClass(FLEX);	//prevent table width changes
+        t.width(t.w = t.width()).removeClass(FLEX);	//prevent table width changes
         $.each(t.c, function(i,c){
             c.width(w[i]).w = w[i];				//set column widths applying bounds (table's max-width)
         });
@@ -242,7 +251,12 @@
 		if(t.opt.liveDrag){ 			//if liveDrag is enabled
 			if(last){
 			    c.width(drag.w);
-                t.w = t.width();
+                if(!t.f && t.opt.overflow){			//if overflow is set, incriment min-width to force overflow
+                    t.css('min-width', t.w + x - drag.l);
+                }
+                else {
+                	t.w = t.width();
+                }
 			}else{
 				syncCols(t,i); 			//columns are synchronized
 			}
@@ -343,6 +357,7 @@
 				gripInnerHtml: '',				//if it is required to use a custom grip it can be done using some custom HTML				
 				liveDrag: false,				//enables table-layout updating while dragging	
                 fixed: true,                    //table width does not change if columns are resized
+                overflow: false,				//allows to resize collumns with overflow of parent container. makes sense only in unfixed mode
 				minWidth: 15, 					//minimum width value in pixels allowed for a column 
 				headerOnly: false,				//specifies that the size of the the column resizing anchors will be bounded to the size of the first row 
 				hoverCursor: "e-resize",  		//cursor to be used on grip hover
@@ -365,4 +380,3 @@
         }
     });
 })(jQuery);
-
