@@ -4,36 +4,52 @@
   <title>colResizable demo</title>  
 
   <link rel="stylesheet" type="text/css" href="css/main.css" />  
+  <style>
+      .scroll{
+          overflow:scroll;
+          max-width:100%;
+          position:relative;
+      }
+
+      
+  </style>
   <script  src="js/jquery.js"></script>
   <script  src="../../source/colResizable-1.6.source.js"></script>
   <script type="text/javascript">
 	$(function(){	
 
-		var onSampleResized = function(e){
-			var columns = $(e.currentTarget).find("th");
-			var msg = "columns widths: ";
-			columns.each(function(){ msg += $(this).width() + "px; "; })
-			$("#sample2Txt").html(msg);
-			
-		};	
 	
-		$("#sample2").colResizable({
+		$("#normal").colResizable({
 			liveDrag:true, 
 			gripInnerHtml:"<div class='grip'></div>", 
 			draggingClass:"dragging", 
-            overflow: true,
-			onResize:onSampleResized});
-		
-	});	
+            overflow: false});
+        
+        $("#flex").colResizable({
+            liveDrag:true, 
+            gripInnerHtml:"<div class='grip'></div>", 
+            draggingClass:"dragging", 
+            fixed: false});
+
+
+      $("#overflow").colResizable({
+          liveDrag:true, 
+          gripInnerHtml:"<div class='grip'></div>", 
+          draggingClass:"dragging", 
+          overflow: true});
+
+      });	
   </script>
   
 </head>
 <body>
 	<div class="center" >
 	
-		 <br/><br/>
-						
-		 <table id="sample2" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <h3>Try to resize your browser to understand what is going on in this sample</h3>
+        <br/>
+    
+        <p><strong>Normal mode:</strong> table width adapts to the container width. Columns resize using their neighbour's width</p>
+		 <table id="normal" width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<th>header</th><th>header</th><th>header</th>
 			</tr>
@@ -47,14 +63,45 @@
 				<td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
 			</tr>																	
 		</table>
+
+        
+        <p><strong>Flex mode:</strong> columns are sized independently unless there is not enought space in the container</p>
+        <table id="flex" width="50%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>header</th><th>header</th><th>header</th>
+            </tr>
+            <tr>
+                <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+            </tr>
+            <tr>
+                <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+            </tr>
+            <tr>
+                <td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
+            </tr>																	
+        </table>
+ 
+        
+        <p><strong>Overflow mode:</strong> columns are sized independently. Table width can exceed its container </p>
+        <div class="scroll">
+            <table id="overflow" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>header</th><th>header</th><th>header</th>
+                </tr>
+                <tr>
+                    <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                </tr>
+                <tr>
+                    <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                </tr>
+                <tr>
+                    <td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
+                </tr>																	
+            </table>
+        </div>
 		
 		<br/>
-		
-		<div class="sampleText">
-			<label id="sample2Txt">Drag the columns to start</label>				
-		</div>
-		
-		<br/><br/>
+
 
 	</div>	
 		

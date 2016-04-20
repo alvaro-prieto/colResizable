@@ -44,7 +44,7 @@ td.bottom{
 
 .grip{
 	width:20px;
-	height:30px;
+	height:15px;
 	margin-top:-3px;
 	background-image:url('../img/grip.png');
 	margin-left:-5px;
@@ -55,6 +55,10 @@ td.bottom{
 
 .grip:hover{
 	background-position-x:-20px;
+}
+.JCLRLastGrip .grip{
+    background-position-y:-18px;
+    left:-2px;
 }
 
 .dragging .grip{
