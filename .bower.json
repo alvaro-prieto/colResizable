@@ -1,0 +1,14 @@
+{
+"name": "col-resizable-jlopezh",
+"homepage": "https://github.com/jlopezh/colResizable",
+"main": [
+"./colResizable-1.5.min.js"
+],
+"_resolution": {
+"type": "branch",
+"branch": "master"
+},
+"_source": "https://github.com/jlopezh/colResizable.git",
+"_target": "*",
+"_originalSource": "col-resizable-jlopezh"
+}
