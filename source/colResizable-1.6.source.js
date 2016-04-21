@@ -358,10 +358,11 @@
             var defaults = {
 			
 				//attributes:
+                
+                resizeMode: 'fit',                    //mode can be 'fit', 'flex' or 'overflow'
                 draggingClass: 'JCLRgripDrag',	//css-class used when a grip is being dragged (for visual feedback purposes)
 				gripInnerHtml: '',				//if it is required to use a custom grip it can be done using some custom HTML				
 				liveDrag: false,				//enables table-layout updating while dragging	
-                fixed: true,                    //table width does not change if columns are resized
 				minWidth: 15, 					//minimum width value in pixels allowed for a column 
 				headerOnly: false,				//specifies that the size of the the column resizing anchors will be bounded to the size of the first row 
 				hoverCursor: "e-resize",  		//cursor to be used on grip hover
@@ -372,16 +373,22 @@
 				marginRight: null, 				//in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel
-                overflow: false,				//allows to resize collumns with overflow of parent container. 
-                mode: 'fit',                    //mode can be 'fit', 'flex' or 'overflow'
-                
-				
+
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
 				onResize: null					//callback function fired when the dragging process is over
             }			
 			var options =  $.extend(defaults, options);		
-            if(options.overflow) options.fixed = false;
+            
+            //since now there are 3 different ways of resizing columns, I changed the external interface to make it clear
+            //calling it 'resizeMode' but also to remove the "fixed" attribute which was confusing for many people
+            options.fixed = true;
+            options.overflow = false;
+            switch(options.resizeMode){
+                case 'flex': options.fixed = false; break;
+                case 'overflow': options.fixed = false; options.overflow = true; break;
+            }
+
             return this.each(function() {				
              	init( this, options);             
             });

@@ -5,62 +5,128 @@
 
   <link rel="stylesheet" type="text/css" href="css/main.css" />  
   <script  src="js/jquery.js"></script>
-  <script  src="js/colResizable-1.5.min.js"></script>
+  <script  src="../../source/colResizable-1.6.source.js"></script>
   <script type="text/javascript">
 	$(function(){	
+        
+        var innerHTML = $("#updatePanel").html();
+        
+        var onTablesCreated = function(){
+            $("#normal").colResizable({
+                liveDrag:true, 
+                gripInnerHtml:"<div class='grip'></div>", 
+                draggingClass:"dragging", 
+                resizeMode:'fit', 
+                postbackSafe:true,
+                partialRefresh:true});
 
-		var onTableCreated = function(){
-			$("#updatePanelSample").colResizable({
-				liveDrag:true, 
-				gripInnerHtml:"<div class='grip'></div>", 
-				draggingClass:"dragging", 
-				postbackSafe:true,
-				fixed:false,
-				partialRefresh:true,
-			});	
-		}
+            $("#flex").colResizable({
+                liveDrag:true, 
+                gripInnerHtml:"<div class='grip'></div>", 
+                draggingClass:"dragging", 
+                resizeMode:'flex', 
+                postbackSafe:true,
+                partialRefresh:true});
+
+
+            $("#overflow").colResizable({
+                liveDrag:true, 
+                gripInnerHtml:"<div class='grip'></div>", 
+                draggingClass:"dragging", 
+                resizeMode:'overflow', 
+                postbackSafe:true,
+                partialRefresh:true}); 
+        }
 
 		var fakePostback = function(){
 			$("#updatePanel").html('<img src="img/loading.gif"/>');
 			setTimeout(function(){
-				$("#updatePanel").html('<table id="updatePanelSample" width="500" border="0" cellpadding="0" cellspacing="0"> <tbody><tr> <th>header</th><th>header</th><th>header</th> </tr> <tr> <td class="left">cell</td><td>cell</td><td class="right">cell</td> </tr> <tr> <td class="left">cell</td><td>cell</td><td class="right">cell</td> </tr> <tr> <td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td> </tr> </tbody></table>');
+				$("#updatePanel").html(innerHTML);
 				onPostbackOver();
 				}, 700);
 		};
 		
 		var onPostbackOver = function(){
-			onTableCreated();
+			onTablesCreated();
 		};
 		
+        
 		$("#postback").click(fakePostback);
-		onTableCreated();
+        onPostbackOver();
 		
-		});
+    });
   </script>
   
 </head>
 <body>
 	<div class="center" >
 	
-		 <br/><br/>
-						
+        <h3>Click on 'Partial refresh' to simulate a postback</h3>		
 		<button id="postback">Partial refresh</button >
 				
 		<div id="updatePanel">			
-			 <table id="updatePanelSample"  width="500" border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<th>header</th><th>header</th><th>header</th>
-				</tr>
-				<tr>
-					<td class="left">cell</td><td>cell</td><td class="right">cell</td>
-				</tr>
-				<tr>
-					<td class="left">cell</td><td>cell</td><td class="right">cell</td>
-				</tr>
-				<tr>
-					<td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
-				</tr>																	
-			</table>
+
+
+
+            <br/>
+
+            <p><strong>resizeMode: 'fit'</strong> table width adapts to the container width. Columns resize using their neighbour's width</p>
+            <table id="normal" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>header</th><th>header</th><th>header</th>
+                </tr>
+                <tr>
+                    <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                </tr>
+                <tr>
+                    <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                </tr>
+                <tr>
+                    <td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
+                </tr>																	
+            </table>
+
+
+            <p><strong>resizeMode: 'flex'</strong> columns are sized independently unless there is not enought space in the container</p>
+            <table id="flex" width="50%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>header</th><th>header</th><th>header</th>
+                </tr>
+                <tr>
+                    <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                </tr>
+                <tr>
+                    <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                </tr>
+                <tr>
+                    <td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
+                </tr>																	
+            </table>
+
+
+            <p><strong>resizeMode: 'overflow'</strong> columns are sized independently. Table width can exceed its container </p>
+            <div class="scroll">
+                <table id="overflow" width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>header</th><th>header</th><th>header</th>
+                    </tr>
+                    <tr>
+                        <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                    </tr>
+                    <tr>
+                        <td class="left">cell</td><td>cell</td><td class="right">cell</td>
+                    </tr>
+                    <tr>
+                        <td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right">cell</td>
+                    </tr>																	
+                </table>
+            </div>
+
+            <br/>
+
+            
+            
+            
 		</div>
 		
 		<br/>

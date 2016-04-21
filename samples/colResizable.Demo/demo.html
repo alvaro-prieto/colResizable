@@ -23,20 +23,20 @@
 			liveDrag:true, 
 			gripInnerHtml:"<div class='grip'></div>", 
 			draggingClass:"dragging", 
-            overflow: false});
+            resizeMode:'fit'});
         
         $("#flex").colResizable({
             liveDrag:true, 
             gripInnerHtml:"<div class='grip'></div>", 
             draggingClass:"dragging", 
-            fixed: false});
+            resizeMode:'flex'});
 
 
       $("#overflow").colResizable({
           liveDrag:true, 
           gripInnerHtml:"<div class='grip'></div>", 
           draggingClass:"dragging", 
-          overflow: true});
+          resizeMode:'overflow'});
 
       });	
   </script>
@@ -48,7 +48,7 @@
         <h3>Try to resize your browser to understand what is going on in this sample</h3>
         <br/>
     
-        <p><strong>Normal mode:</strong> table width adapts to the container width. Columns resize using their neighbour's width</p>
+        <p><strong>resizeMode: 'fit'</strong> table width adapts to the container width. Columns resize using their neighbour's width</p>
 		 <table id="normal" width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<th>header</th><th>header</th><th>header</th>
@@ -65,7 +65,7 @@
 		</table>
 
         
-        <p><strong>Flex mode:</strong> columns are sized independently unless there is not enought space in the container</p>
+        <p><strong>resizeMode: 'flex'</strong> columns are sized independently unless there is not enought space in the container</p>
         <table id="flex" width="50%" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <th>header</th><th>header</th><th>header</th>
@@ -82,7 +82,7 @@
         </table>
  
         
-        <p><strong>Overflow mode:</strong> columns are sized independently. Table width can exceed its container </p>
+        <p><strong>resizeMode: 'overflow'</strong> columns are sized independently. Table width can exceed its container </p>
         <div class="scroll">
             <table id="overflow" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
