@@ -342,6 +342,9 @@
                 }
                 if(!t.f && hasChanged){     //in non fixed-sized tables
                     applyBounds(t);         //apply the new bounds 
+                    if(t.mode == 'flex' && t.p && S){   //if postbackSafe is enabled and there is sessionStorage support,
+                        memento(t);                     //the new layout is serialized and stored for 'flex' tables
+                    }
                 }
                 syncGrips(t.addClass(SIGNATURE));
             }
