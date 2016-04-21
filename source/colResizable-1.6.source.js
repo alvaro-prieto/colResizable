@@ -328,10 +328,10 @@
 		for(var t in tables){
             if( tables.hasOwnProperty( t ) ) {
                 t = tables[t];
-                var i, mw=0, hasChanged = t.w != t.width();
+                var i, mw=0;
                 t.removeClass(SIGNATURE);   //firefox doesn't like layout-fixed in some cases
-                if (t.f && hasChanged) {    //if the the table's width has changed and it is in fixed mode
-                    t.w = t.width();        //its new value is kept the active cells area is obtained
+                if (t.f) {                  //in fixed mode
+                    t.w = t.width();        //its new width is kept
                     for(i=0; i<t.ln; i++) mw+= t.c[i].w;		
                     //cell rendering is not as trivial as it might seem, and it is slightly different for
                     //each browser. In the beginning i had a big switch for each browser, but since the code
@@ -339,8 +339,7 @@
                     //pretty well but it's a bit slower. For now, lets keep things simple...   
                     for(i=0; i<t.ln; i++) t.c[i].css("width", M.round(1000*t.c[i].w/mw)/10 + "%").l=true; 
                     //c.l locks the column, telling us that its c.w is outdated									
-                }
-                if(!t.f && hasChanged){     //in non fixed-sized tables
+                }else{     //in non fixed-sized tables
                     applyBounds(t);         //apply the new bounds 
                     if(t.mode == 'flex' && t.p && S){   //if postbackSafe is enabled and there is sessionStorage support,
                         memento(t);                     //the new layout is serialized and stored for 'flex' tables
