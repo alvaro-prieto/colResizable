@@ -33,11 +33,11 @@ To use this plugin a script reference must be added to the colResizable.min.js f
 
 *  **mode**: [type: string] [default: 'fit'] [version: 1.6] [values: 'fit', 'flex', 'overflow']
 
-..It is used to set how the resize method works. Those are the possible values:
+    It is used to set how the resize method works. Those are the possible values:
+    
+    * `'fit'`:  this is default resizing model, in which resizing a column does not alter table width, which means that when a column is expanded the next one shrinks. 
 
-...`'fit'`:  this is default resizing model, in wich resizing a column does not alter table width, which means that when a column is expanded the next one shrinks. 
-
-If fixed is set to false then table can change its width and each column can shrink or expand independently.
+    * `'flex'`: in this mode the table can change its width and each column can shrink or expand independently if there is enough space in the parent container. If there is not enough space, columns will share its width as they expand or shrink. The table will never get bigger than its parent (at least if width is specified in %).
 
 ___
 
