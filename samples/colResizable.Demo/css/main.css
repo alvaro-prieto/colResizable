@@ -30,6 +30,12 @@ td{
 	border-left:1px solid #bbb;
 }
 
+td.disabled, th.disabled{
+    width:80px;
+    text-align: center;
+    min-width:80px;
+}
+
 td.left{
 	border-left:1px solid #2e638e;
 }

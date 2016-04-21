@@ -14,8 +14,8 @@
       
   </style>
   <script  src="js/jquery.js"></script>
-  <!--script  src="../../source/colResizable-1.6.source.js"></script-->
-  <script  src="../../colResizable-1.6.min.js"></script>
+  <script  src="../../source/colResizable-1.6.source.js"></script>
+  <!--script  src="../../colResizable-1.6.min.js"></script-->
   <script type="text/javascript">
 	$(function(){	
 
@@ -24,22 +24,35 @@
 			liveDrag:true, 
 			gripInnerHtml:"<div class='grip'></div>", 
 			draggingClass:"dragging", 
-            resizeMode:'fit'});
+            resizeMode:'fit'
+        });
         
         $("#flex").colResizable({
             liveDrag:true, 
             gripInnerHtml:"<div class='grip'></div>", 
             draggingClass:"dragging", 
-            resizeMode:'flex'});
+            resizeMode:'flex'
+        });
 
 
       $("#overflow").colResizable({
           liveDrag:true, 
           gripInnerHtml:"<div class='grip'></div>", 
           draggingClass:"dragging", 
-          resizeMode:'overflow'});
+          resizeMode:'overflow'
+      });
+        
 
-      });	
+      $("#disabled").colResizable({
+          liveDrag:true, 
+          gripInnerHtml:"<div class='grip'></div>", 
+          draggingClass:"dragging", 
+          resizeMode:'overflow',
+          disabledColumns: [1,2]
+      });
+
+        
+    });	
   </script>
   
 </head>
@@ -100,7 +113,22 @@
                 </tr>																	
             </table>
         </div>
-		
+        
+        <p><strong>disabled columns:</strong> it can be specified whether some columns will not have resizing grip</p>
+        <table id="disabled" width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>header</th><th>header</th><th class="disabled">disabled</th>
+            </tr>
+            <tr>
+                <td class="left">cell</td><td>cell</td><td class="right disabled">disabled</td>
+            </tr>
+            <tr>
+                <td class="left">cell</td><td>cell</td><td class="right disabled">disabled</td>
+            </tr>
+            <tr>
+                <td class="left bottom">cell</td><td class="bottom">cell</td><td class="bottom right disabled">disabled</td>
+            </tr>																	
+        </table>
 		<br/>
 
 
