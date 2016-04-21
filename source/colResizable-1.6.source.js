@@ -373,6 +373,8 @@
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel
                 overflow: false,				//allows to resize collumns with overflow of parent container. 
+                mode: 'fit',                    //mode can be 'fit', 'flex' or 'overflow'
+                
 				
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
