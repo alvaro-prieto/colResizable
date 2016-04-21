@@ -19,13 +19,6 @@
         "./colResizable-1.6.min.js"
     ],
     "license": ["MIT", "GPL"],
-    "_resolution": {
-        "type": "branch",
-        "branch": "master"
-    },
-    "_source": "https://github.com/alvaro-prieto/colResizable.git",
-    "_target": "*",
-    "_originalSource": "colResizable",
     "repository": {
         "type": "git",
         "url": "https://github.com/alvaro-prieto/colResizable.git"
