@@ -1,6 +1,6 @@
 {
 	"name" : "colresizable",
-	"version" : "1.5.0",
+	"version" : "1.6.0",
 	"description" : "colResizable is a free jQuery plugin designed to resize HTML tables by dragging column anchors manually.",
 	"title" : "colResizable",
 	"author" : {
@@ -31,7 +31,7 @@
 	],
 	"homepage" : "http://bacubacu.com/colresizable/",
 	"files" : [
-		"colResizable-1.5.min.js",
+		"colResizable-1.6.min.js",
 		"./source",
 		"./samples"
 	]

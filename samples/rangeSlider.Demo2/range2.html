@@ -4,7 +4,8 @@
   <title>colResizable &#8211; range slider demo</title>  
   <link rel="stylesheet" type="text/css" href="css/main.css" />  
   <script  src="js/jquery.js"></script>
-    <script  src="../../source/colResizable-1.6.source.js"></script>
+    <!--script  src="../../source/colResizable-1.6.source.js"></script-->
+    <script  src="../../colResizable-1.6.min.js"></script>
   <script type="text/javascript">
 	$(function(){	
 
@@ -23,8 +24,6 @@
 			s=s.slice(0,-1);			
 			$("#text").html("Selected range: " +Math.round(ranges[1]*10)/10 +"% starting at: "+ Math.round(ranges[0]*10)/10 +"%");
 		}
-		
-		
 		
 		
 		$("#range").colResizable({
