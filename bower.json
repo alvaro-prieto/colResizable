@@ -1,6 +1,6 @@
 {
     "name": "colResizable",
-    "description": "jQuery plugin to resize HTML tables by dragging columns manually",
+    "description": "Resizable table columns for jQuery",
     "homepage": "http://www.bacubacu.com/colresizable",
     "keywords": [
         "resize",
@@ -8,6 +8,7 @@
         "table",
         "table resize",
         "resizable columns",
+        "resize table",
         "tables",
         "drag",
         "column",
