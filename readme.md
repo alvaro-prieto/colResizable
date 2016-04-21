@@ -37,7 +37,7 @@ To use this plugin a script reference must be added to the colResizable.min.js f
     
     * `'fit'`:  this is default resizing model, in which resizing a column does not alter table width, which means that when a column is expanded the next one shrinks. 
 
-    * `'flex'`: in this mode the table can change its width and each column can shrink or expand independently if there is enough space in the parent container. If there is not enough space, columns will share its width as they expand or shrink. The table will never get bigger than its parent (at least if width is specified in %).
+    * `'flex'`: in this mode the table can change its width and each column can shrink or expand independently if there is enough space in the parent container. If there is not enough space, columns will share its width as they are resized. Table will never get bigger than its parent.
 
 ___
 
