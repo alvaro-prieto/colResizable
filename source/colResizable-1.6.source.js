@@ -6,7 +6,7 @@
     | (_| (_) | | | \ \  __/\__ \ |/ / (_| | |_) | |  __/
      \___\___/|_|_|  \_\___||___/_/___\__,_|_.__/|_|\___|
 	 
-	v 1.6 - a jQuery plug-in by Alvaro Prieto Lauroba
+	v1.6 - jQuery plugin created by Alvaro Prieto Lauroba
 	
 	Licences: MIT & GPL
 	Feel free to use or modify this plugin as far as my full name is kept	
@@ -135,10 +135,10 @@
 			w = S[t.id].split(";");					//column widths is obtained
 			tw = w[t.ln+1];
             if(!t.f && tw){							//if not fixed and table width data available its size is restored
-                t.width(tw);
+                t.width(tw*=1);
                 if(t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
                     t.css('min-width', tw + PX);
-                    t.w = tw*1;
+                    t.w = tw;
                 }
             }
 			for(;i<t.ln;i++){						//for each column
