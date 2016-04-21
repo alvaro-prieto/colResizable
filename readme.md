@@ -37,7 +37,7 @@ When set to true the table layout is updated while dragging column anchors. live
 
 ___
 
-*  **fixed**: [type: boolean] [default: true] [version: 1.5] 
+*  **~~fixed~~**: [type: boolean] [default: true] [version: 1.5] **DEPRECATED**
 
 It is used to set how the resize method works. In fixed mode resizing a column does not alter total table width, which means that when a column is expanded the next one shrinks. If fixed is set to false then table can change its width and each column can shrink or expand independently.
 
