@@ -31,9 +31,9 @@ td{
 }
 
 td.disabled, th.disabled{
-    width:80px;
+    width:100px;
     text-align: center;
-    min-width:80px;
+    min-width:100px;
 }
 
 td.left{
