@@ -47,8 +47,9 @@
 	 * @param {Object} options	- some customization values
 	 */
 	var init = function( tb, options){	
-		var t = $(tb);										//the table object is wrapped
-		t.opt = options;
+		var t = $(tb);				    //the table object is wrapped
+        t.opt = options;                //each table has its own options available at anytime
+        t.mode = options.resizeMode;    //shortcut 
 		if(t.opt.disable) return destroy(t);				//the user is asking to destroy a previously colResized table
 		var	id = t.id = t.attr(ID) || SIGNATURE+count++;	//its id is obtained, if null new one is generated		
 		t.p = t.opt.postbackSafe; 							//short-cut to detect postback safe 		
@@ -62,7 +63,7 @@
 		t.b  = I(ie? tb.border || tb.currentStyle.borderLeftWidth :t.css('border-left-width'))||1;	//outer border width (again cross-browser issues)
 		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pity that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
 		tables[id] = t; 	//the table object is stored using its id as key	
-		createGrips(t);		//grips are created
+		createGrips(t);		//grips are created 
 	
 	};
 
@@ -95,28 +96,28 @@
 			var c = $(this); 						//jquery wrap for the current column			
 			var g = $(t.gc.append('<div class="JCLRgrip"></div>')[0].lastChild); //add the visual node to be used as grip
             g.append(t.opt.gripInnerHtml).append('<div class="'+SIGNATURE+'"></div>');
-            if(i == t.ln-1){
-                g.addClass("JCLRLastGrip"); 
-                if(t.f) g.html("");
+            if(i == t.ln-1){                        //if the current grip is the las one 
+                g.addClass("JCLRLastGrip");         //add a different css class to stlye it in a different way if needed
+                if(t.f) g.html("");                 //if the table resizing mode is set to fixed, the last grip is removed since table with can not change
             }
             g.bind('touchstart mousedown', onGripMouseDown); //bind the mousedown event to start dragging 
 
-			g.t = t; g.i = i; g.c = c;	c.w =c.width();		//some values are stored in the grip's node data
+			g.t = t; g.i = i; g.c = c;	c.w =c.width();		//some values are stored in the grip's node data as shortcut
 			t.g.push(g); t.c.push(c);						//the current grip and column are added to its table object
 			c.width(c.w).removeAttr("width");				//the width of the column is converted into pixel-based measurements
 			g.data(SIGNATURE, {i:i, t:t.attr(ID), last: i == t.ln-1});	 //grip index and its table name are stored in the HTML 												
 		}); 	
 		t.cg.removeAttr("width");	//remove the width attribute from elements in the colgroup 
-		syncGrips(t); 				//the grips are positioned according to the current table layout			
-		//there is a small problem, some cells in the table could contain dimension values interfering with the 
-		//width value set by this plugin. Those values are removed
+
 		t.find('td, th').not(th).not('table th, table td').each(function(){  
 			$(this).removeAttr('width');	//the width attribute is removed from all table cells which are not nested in other tables and dont belong to the header
 		});		
         if(!t.f){
             t.removeAttr('width').addClass(FLEX); //if not fixed, let the table grow as needed
         }
-
+        syncGrips(t); 				//the grips are positioned according to the current table layout			
+        //there is a small problem, some cells in the table could contain dimension values interfering with the 
+        //width value set by this plugin. Those values are removed
 		
 	};
 	
@@ -268,6 +269,7 @@
 
 	/**
 	 * Event handler fired when the dragging is over, updating table layout
+     * @param {event} e - grip's drag over event
 	 */
 	var onGripDragOver = function(e){	
 		
@@ -290,7 +292,7 @@
             if(!t.f) applyBounds(t);	//if not fixed mode, then apply bounds to obtain real width values
             syncGrips(t);				//the grips are updated
             if (cb) { e.currentTarget = t[0]; cb(e); }	//if there is a callback function, it is fired
-            if(t.p && S) memento(t); 						//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
+            if(t.p && S) memento(t); 	//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
         }
 		drag = null;   //since the grip's dragging is over									
 	};	
@@ -326,10 +328,10 @@
 		for(var t in tables){
             if( tables.hasOwnProperty( t ) ) {
                 t = tables[t];
-                var i, mw=0;
-                t.removeClass(SIGNATURE);	     //firefox doesn't like layout-fixed in some cases
-                if (t.f && t.w != t.width()) {   //if the the table's width has changed and it is in fixed mode
-                    t.w = t.width();			 //its new value is kept the active cells area is obtained
+                var i, mw=0, hasChanged = t.w != t.width();
+                t.removeClass(SIGNATURE);   //firefox doesn't like layout-fixed in some cases
+                if (t.f && hasChanged) {    //if the the table's width has changed and it is in fixed mode
+                    t.w = t.width();        //its new value is kept the active cells area is obtained
                     for(i=0; i<t.ln; i++) mw+= t.c[i].w;		
                     //cell rendering is not as trivial as it might seem, and it is slightly different for
                     //each browser. In the beginning i had a big switch for each browser, but since the code
@@ -337,6 +339,9 @@
                     //pretty well but it's a bit slower. For now, lets keep things simple...   
                     for(i=0; i<t.ln; i++) t.c[i].css("width", M.round(1000*t.c[i].w/mw)/10 + "%").l=true; 
                     //c.l locks the column, telling us that its c.w is outdated									
+                }
+                if(!t.f && hasChanged){     //in non fixed-sized tables
+                    applyBounds(t);         //apply the new bounds 
                 }
                 syncGrips(t.addClass(SIGNATURE));
             }
