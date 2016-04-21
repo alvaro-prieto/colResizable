@@ -9,9 +9,10 @@ body{
 	text-align:left;
 }
 
-#table{
+table{
 	width:100%;
 	max-width:1600px;
+    border-right:1px solid #999;
 }
 
 th{
@@ -56,6 +57,7 @@ td.bottom{
 .grip:hover{
 	background-position-x:-20px;
 }
+
 .JCLRLastGrip .grip{
     background-position-y:-18px;
     left:-2px;

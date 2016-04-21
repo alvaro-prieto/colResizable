@@ -12,22 +12,21 @@
 
         var applyColresizable = function(){
 
-            $("#table").colResizable({
+            $("#dynamicTable").colResizable({
                 liveDrag:true, 
                 gripInnerHtml:"<div class='grip'></div>", 
                 draggingClass:"dragging", 
-                resizeMode:'fit',
-                flush: true
+                resizeMode:'fit'
             });
         }
         
-        $("#add").click(function(){
+        
+        $("#addColumn").click(function(){
             //first disable colResizable always before any DOM manipulation
-            $("#table").colResizable({disable:true});
+            $("#dynamicTable").colResizable({disable:true});
             //add a column (you can do it as you want, this is just an example)
             var i = 0;
-            var tr = $("#table tr");
-            console.log(tr.length);
+            var tr = $("#dynamicTable tr");
             for(i=0; i<tr.length; i++){
                 var row = tr.eq(i);
                 var cell = i ? $("<td/>") : $("<th/>");
@@ -36,14 +35,21 @@
             };
             
             //since now we have more columns, lets share the table width proportionally
-            var th = $("#table th");
+            var th = $("#dynamicTable th");
             th.width(100 / th.length + "%");
-            
-            
             //apply colResizable again to be able to drag columns
             applyColresizable();
         })
         
+        
+        $("#addRow").click(function(){
+            //first disable colResizable always before any DOM manipulation
+            $("#dynamicTable").colResizable({disable:true});
+            //duplicate the las row
+            var html = $("#dynamicTable tr:last").html();
+            $("#dynamicTable").append("<tr>"+html+"</tr>");
+            applyColresizable();
+        })
 
         applyColresizable();
         
@@ -60,7 +66,7 @@
         <h3>Dynamically generated content. (add/remove columns and rows)</h3>
         <br/>
     
-		 <table id="table" width="100%" border="0" cellpadding="0" cellspacing="0">
+		 <table id="dynamicTable" width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<th>header</th><th>header</th><th>header</th>
 			</tr>
@@ -75,8 +81,8 @@
 			</tr>																	
 		</table>
         <br/>
-        <button  id="add">add column</button>
-        <button  id="row">add row</button>
+        <button  id="addColumn">add column</button>
+        <button  id="addRow">add row</button>
 
     
 		<br/>

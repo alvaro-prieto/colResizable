@@ -38,7 +38,7 @@
 	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
 	
 	//append required CSS rules  
-	h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;}</style>");
+    h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
 
 	
 	/**
@@ -49,7 +49,8 @@
 	var init = function( tb, options){	
 		var t = $(tb);				    //the table object is wrapped
         t.opt = options;                //each table has its own options available at anytime
-        t.mode = options.resizeMode;    //shortcut 
+        t.mode = options.resizeMode;    //shortcuts
+        t.dc = t.opt.disabledColumns;
 		if(t.opt.disable) return destroy(t);				//the user is asking to destroy a previously colResized table
 		var	id = t.id = t.attr(ID) || SIGNATURE+count++;	//its id is obtained, if null new one is generated		
 		t.p = t.opt.postbackSafe; 							//short-cut to detect postback safe 		
@@ -93,14 +94,22 @@
 		t.ln = th.length;							//table length is stored	
 		if(t.p && S && S[t.id])memento(t,th);		//if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
 		th.each(function(i){						//iterate through the table column headers			
-			var c = $(this); 						//jquery wrap for the current column			
+			var c = $(this); 						//jquery wrap for the current column		
+            var dc = t.dc.indexOf(i)!=-1;           //is this a disabled column?
 			var g = $(t.gc.append('<div class="JCLRgrip"></div>')[0].lastChild); //add the visual node to be used as grip
-            g.append(t.opt.gripInnerHtml).append('<div class="'+SIGNATURE+'"></div>');
+            g.append(dc ? "": t.opt.gripInnerHtml).append('<div class="'+SIGNATURE+'"></div>');
             if(i == t.ln-1){                        //if the current grip is the las one 
                 g.addClass("JCLRLastGrip");         //add a different css class to stlye it in a different way if needed
                 if(t.f) g.html("");                 //if the table resizing mode is set to fixed, the last grip is removed since table with can not change
             }
             g.bind('touchstart mousedown', onGripMouseDown); //bind the mousedown event to start dragging 
+            
+            if (!dc){ 
+                //if normal column bind the mousedown event to start dragging, if disabled then apply its css class
+                g.removeClass('JCLRdisabledGrip').bind('touchstart mousedown', onGripMouseDown);      
+            }else{
+                g.addClass('JCLRdisabledGrip'); 
+            }
 
 			g.t = t; g.i = i; g.c = c;	c.w =c.width();		//some values are stored in the grip's node data as shortcut
 			t.g.push(g); t.c.push(c);						//the current grip and column are added to its table object
@@ -379,7 +388,8 @@
 				marginLeft: null,				//in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
 				marginRight: null, 				//in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
-				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel
+				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel,
+                disabledColumns: [],
 
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
