@@ -31,7 +31,7 @@ To use this plugin a script reference must be added to the colResizable.min.js f
 ## Attributes
 
 
-*  **mode**: [type: string] [default: 'fit'] [version: 1.6] [values: 'fit', 'flex', 'overflow']
+*  **resizeMode**: [type: string] [default: 'fit'] [version: 1.6] [values: 'fit', 'flex', 'overflow']
 
     It is used to set how the resize method works. Those are the possible values:
     
@@ -45,7 +45,11 @@ ___
 When set to true it aims to remove all previously added enhancements such as events and additional DOM elements assigned by this plugin to a single or collection of tables. It is required to disable a previously *colResized* table prior its removal from the document object tree using JavaScript, and also before any DOM manipulations to an already *colResized* table such as adding columns, rows, etc.
 
 ___
+* **disabledColumns**: [type: array of int] [default: []] [version: 1.6] 
 
+An array of column indexes to be excluded, so it will not be possible to drag them manually.
+
+___
 *  **liveDrag**: [type: boolean] [default: false] [version: 1.0] 
 
 When set to true the table layout is updated while dragging column anchors. liveDrag enabled is more CPU consuming so it is not recommended for slow computers, specially when dealing with huge or extremely complicated tables.
