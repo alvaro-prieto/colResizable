@@ -1,5 +1,5 @@
 {
-    "name": "colResizable",
+    "name": "col-resizable",
     "description": "Resizable table columns for jQuery",
     "homepage": "http://www.bacubacu.com/colresizable",
     "keywords": [
@@ -9,6 +9,7 @@
         "table resize",
         "resizable columns",
         "resize table",
+        "resize columns",
         "tables",
         "drag",
         "column",
@@ -20,10 +21,10 @@
         "Alvaro Prieto Lauroba"
     ],
     "main": [
-        "./colResizable-1.6.min.js"
+        "./colResizable-1.6.js"
     ],
     "dependencies": {
-        "jquery": "^1.0.0"
+        "jquery": "^1.9.0"
     },
     "license": ["MIT", "GPL"],
     "repository": {
