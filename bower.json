@@ -10,13 +10,12 @@
         "resizable columns",
         "resize table",
         "resize columns",
-        "colresizable"
+        "colresizable",
         "tables",
         "drag",
         "column",
         "jquery",
-        "resizable",
-        "colresizable"
+        "resizable"
     ],
     "authors": [
         "Alvaro Prieto Lauroba"
