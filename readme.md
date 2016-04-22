@@ -36,22 +36,19 @@ To use this plugin a script reference must be added to the colResizable.min.js f
     It is used to set how the resize method works. Those are the possible values:
     
     * `'fit'`:  this is default resizing model, in which resizing a column does not alter table width, which means that when a column is expanded the next one shrinks. 
-
     * `'flex'`: in this mode the table can change its width and each column can shrink or expand independently if there is enough space in the parent container. If there is not enough space, columns will share its width as they are resized. Table will never get bigger than its parent.
+    * `'overflow'`: allows to resize columns with overflow of parent container.
+
+___
+* **disable**: [type: boolean] [default: false] [version: 1.0] 
+
+When set to true it aims to remove all previously added enhancements such as events and additional DOM elements assigned by this plugin to a single or collection of tables. It is required to disable a previously *colResized* table prior its removal from the document object tree using JavaScript, and also before any DOM manipulations to an already *colResized* table such as adding columns, rows, etc.
 
 ___
 
 *  **liveDrag**: [type: boolean] [default: false] [version: 1.0] 
 
 When set to true the table layout is updated while dragging column anchors. liveDrag enabled is more CPU consuming so it is not recommended for slow computers, specially when dealing with huge or extremely complicated tables.
-
-___
-
-*  **fixed**: [deprecated: use "mode" instead] [type: boolean] [default: true] [version: 1.5 only] 
-
-It is used to set how the resize method works. In fixed mode resizing a column does not alter total table width, which means that when a column is expanded the next one shrinks. If fixed is set to false then table can change its width and each column can shrink or expand independently.
-
-_Note: There is a known issue where the CSS property `table-layout: fixed;` causes a minor conflict with resizing table widths. It is important to note that the `fixed` setting is different from the CSS property and it is encouraged not to apply that style to your tables._
 
 ___
 
@@ -74,13 +71,8 @@ ___
 * **draggingClass**: [type: string] [default: internal css class] [version: 1.0] 
 
 This attribute is used as the css class assigned to column anchors while being dragged. It can be used for visual feedback purposes.
-
 ___
-* **disable**: [type: boolean] [default: false] [version: 1.0] 
 
-When set to true it aims to remove all previously added enhancements such as events and additional DOM elements assigned by this plugin to a single or collection of tables. It is required to disable a previously colResized table prior its removal from the document object tree.
-
-___
 * **minWidth**: [type: number] [default: 15] [version: 1.1] 
 
 This value specifies the minimum width (measured in pixels) that is allowed for the columns.
@@ -114,7 +106,15 @@ ___
 * **marginRight**: [type: string / null] [default: null] [version: 1.3] 
 
 It behaves in exactly the same way than the previous attribute but applied to the right margin.
- 
+___
+
+ *  **fixed**: [deprecated: use "mode" instead] [type: boolean] [default: true] [version: 1.5 only] 
+
+It is used to set how the resize method works. In fixed mode resizing a column does not alter total table width, which means that when a column is expanded the next one shrinks. If fixed is set to false then table can change its width and each column can shrink or expand independently.
+
+_Note: There is a known issue where the CSS property `table-layout: fixed;` causes a minor conflict with resizing table widths. It is important to note that the `fixed` setting is different from the CSS property and it is encouraged not to apply that style to your tables._
+
+
 ## Events
 
 * **onResize**: [type: callback function] [default: null] [version: 1.0] 
