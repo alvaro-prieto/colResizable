@@ -1,7 +1,7 @@
 {
 	"name" : "colresizable",
 	"version" : "1.6.0",
-    "description" : "jQuery plugin to resize HTML tables by dragging columns manually",
+    "description" : "jQuery plugin to resize table columns",
 	"title" : "colResizable",
 	"author" : {
 		"name" : "Alvaro Prieto Lauroba",
@@ -27,12 +27,14 @@
 		"columns",
 		"jquery-plugin",
 		"table",
-		"range slider"
+		"range slider",
+        "colresizable",
+        "resize table columns",
+        "jquery"
 	],
 	"homepage" : "http://bacubacu.com/colresizable/",
 	"files" : [
 		"colResizable-1.6.min.js",
-		"./source",
 		"./samples"
 	]
 }
