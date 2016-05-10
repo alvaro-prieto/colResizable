@@ -24,7 +24,7 @@
         "./colResizable-1.6.js"
     ],
     "dependencies": {
-        "jquery": "^1.9.0"
+        "jquery": "^1.9.0 || ^2.0.0"
     },
     "license": ["MIT", "GPL"],
     "repository": {
