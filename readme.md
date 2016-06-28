@@ -132,10 +132,10 @@ This event is fired while dragging a column anchor if liveDrag is enabled. It ca
 
 ## Backers
 
-colResizable is being developed and maintained for free by Álvaro Prieto Lauroba since 2011. Fortunately there is some lovely people who donated to improve this plugin. [Do you like this plugin? Would you like to help me to improve it? Please! buy me a beer](https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=k18PXZGY1Q9RIpZjyfClOBVBsr0x612d7jS34GWldRwyMCX60EyFjNqLu9W&dispatch=5885d80a13c0db1f8e263663d3faee8d64813b57e559a2578463e58274899069)  
+colResizable is being developed and maintained for free by Álvaro Prieto Lauroba since 2011. Fortunately there is some lovely people who donated to improve this plugin. [Do you like this plugin? Would you like to help me to improve it? Please! buy me a beer](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)  
 
 A million thanks to our lovely patrons: 
 * [Igor Samulenko](https://www.linkedin.com/in/igorsamulenko) 
 
 
-[![Please donate](http://bacubacu.com/colresizable/donate.jpg)](https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=k18PXZGY1Q9RIpZjyfClOBVBsr0x612d7jS34GWldRwyMCX60EyFjNqLu9W&dispatch=5885d80a13c0db1f8e263663d3faee8d64813b57e559a2578463e58274899069)
+[![Please donate](http://bacubacu.com/colresizable/donate.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
