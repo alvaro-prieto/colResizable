@@ -140,4 +140,4 @@ A million thanks to our lovely patrons:
 
 
 ![alt text](http://bacubacu.com/colresizable/donate.jpg "please donate")(https://www.linkedin.com/in/igorsamulenko)
-
+[![Please donate](http://bacubacu.com/colresizable/donate.jpg)](https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=k18PXZGY1Q9RIpZjyfClOBVBsr0x612d7jS34GWldRwyMCX60EyFjNqLu9W&dispatch=5885d80a13c0db1f8e263663d3faee8d64813b57e559a2578463e58274899069)
