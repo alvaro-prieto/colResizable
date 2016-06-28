@@ -129,3 +129,9 @@ ___
 * **onDrag**: [type: callback function] [default: null] [version: 1.1] 
 
 This event is fired while dragging a column anchor if liveDrag is enabled. It can be useful if the table is being used as a multiple range slider. The callback function can obtain a reference to the updated table through the currentTarget attribute of the event retrieved by parameters
+
+## Backers
+
+**Lovely people who donated to improve colResizable. **: 
+
+[Igor Samulenko](https://www.linkedin.com/in/igorsamulenko) 
