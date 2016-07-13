@@ -136,6 +136,6 @@ colResizable is being developed and maintained for free by Álvaro Prieto Laurob
 
 A million thanks to our lovely patrons: 
 * [Igor Samulenko](https://www.linkedin.com/in/igorsamulenko) 
-
+* [Aaron Pesce](https://www.linkedin.com/in/aaron-pesce-9611988a) 
 
 [![Please donate](http://bacubacu.com/colresizable/donate.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
