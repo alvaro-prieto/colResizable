@@ -13,6 +13,8 @@
 	
 	If you are going to use this plug-in in production environments it is 
 	strongly recommended to use its minified version: colResizable.min.js
+	
+	This version modified by Aaron Pesce(pull request pending)
 
 */
 
