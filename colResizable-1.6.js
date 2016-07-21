@@ -13,6 +13,8 @@
 	
 	If you are going to use this plug-in in production environments it is 
 	strongly recommended to use its minified version: colResizable.min.js
+	
+	This version modified by Aaron Pesce(pull request pending)
 
 */
 
@@ -118,8 +120,8 @@
 		}); 	
 		t.cg.removeAttr("width");	//remove the width attribute from elements in the colgroup 
 
-		t.find('td, th').not(th).not('table th, table td').each(function(){  
-			$(this).removeAttr('width');	//the width attribute is removed from all table cells which are not nested in other tables and dont belong to the header
+		t.find('td').not('table th').each(function () {
+			this.children[0].style.maxWidth = th[$(this).index()].style.width;
 		});		
         if(!t.f){
             t.removeAttr('width').addClass(FLEX); //if not fixed, let the table grow as needed
