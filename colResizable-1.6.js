@@ -6,14 +6,10 @@
     | (_| (_) | | | \ \  __/\__ \ |/ / (_| | |_) | |  __/
      \___\___/|_|_|  \_\___||___/_/___\__,_|_.__/|_|\___|
 	 
-	v1.6 - jQuery plugin created by Alvaro Prieto Lauroba
+	v1.7 - jQuery plugin created by Alvaro Prieto Lauroba
 	
 	Licences: MIT & GPL
 	Feel free to use or modify this plugin as far as my full name is kept	
-	
-	If you are going to use this plug-in in production environments it is 
-	strongly recommended to use its minified version: colResizable.min.js
-
 */
 
 (function($){ 	
@@ -35,10 +31,12 @@
 	var M = Math;
 	var ie = navigator.userAgent.indexOf('Trident/4.0')>0;
 	var S;
+    var pad = ""
 	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
+    
 	
 	//append required CSS rules  
-    h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
+    h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden}  .JPadding > tbody > tr > td, .JPadding > tbody > tr > th{padding-left:0!important; padding-right:0!important;} .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
 
 	
 	/**
@@ -51,12 +49,13 @@
         t.opt = options;                //each table has its own options available at anytime
         t.mode = options.resizeMode;    //shortcuts
         t.dc = t.opt.disabledColumns;
+        if(t.opt.removePadding) t.addClass("JPadding");
 		if(t.opt.disable) return destroy(t);				//the user is asking to destroy a previously colResized table
 		var	id = t.id = t.attr(ID) || SIGNATURE+count++;	//its id is obtained, if null new one is generated		
 		t.p = t.opt.postbackSafe; 							//short-cut to detect postback safe 		
 		if(!t.is("table") || tables[id] && !t.opt.partialRefresh) return; 		//if the object is not a table or if it was already processed then it is ignored.
 		if (t.opt.hoverCursor !== 'col-resize') h.append("<style type='text/css'>.JCLRgrip .JColResizer:hover{cursor:"+ t.opt.hoverCursor +"!important}</style>");  //if hoverCursor has been set, append the style
-		t.addClass(SIGNATURE).attr(ID, id).before('<div class="JCLRgrips"/>');	//the grips container object is added. Signature class forces table rendering in fixed-layout mode to prevent column's min-width
+        t.addClass(SIGNATURE).attr(ID, id).before('<div class="JCLRgrips"/>');	//the grips container object is added. Signature class forces table rendering in fixed-layout mode to prevent column's min-width
 		t.g = []; t.c = []; t.w = t.width(); t.gc = t.prev(); t.f=t.opt.fixed;	//t.c and t.g are arrays of columns and grips respectively				
 		if(options.marginLeft) t.gc.css("marginLeft", options.marginLeft);  	//if the table contains margins, it must be specified
 		if(options.marginRight) t.gc.css("marginRight", options.marginRight);  	//since there is no (direct) way to obtain margin values in its original units (%, em, ...)
@@ -390,6 +389,7 @@
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel,
                 disabledColumns: [],            //column indexes to be excluded
+                removePadding: false,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
 
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
