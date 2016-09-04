@@ -389,7 +389,7 @@
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel,
                 disabledColumns: [],            //column indexes to be excluded
-                removePadding: false,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
+                removePadding: true,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
 
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>test</title>
+
+    <style>
+        table{
+            width: 100%;
+            border:1px solid #ddd;
+        }
+        thead{
+            width: 100%;
+            color: #ccc;
+        }
+        tbody{
+            width: 100%;
+            height: 200px;
+        }
+        th,td{
+            padding: 0.8rem;
+            text-align: left;
+            vertical-align: top;
+            border-left: 1px solid #ccc;
+        }
+        
+    </style>
+    
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="colResizable-1.6.min.js"></script>
+<script type="text/javascript"> 
+    $(function(){
+        $(".test").colResizable();
+    })
+    
+
+</script>
+
+</head>
+<body>
+
+<table class="test">
+<thead>
+<tr>
+<th>header 1</th>
+<th>header 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lean</td>
+<td>cell 1</td>
+</tr>
+<tr>
+<td>chacha</td>
+<td>cell 2</td>
+</tr>
+<tr>
+<td>okaoka</td>
+<td>cell 3</td>
+</tr>
+</tbody>
+</table>
+
+
+</body>
+</html>
