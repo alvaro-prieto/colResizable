@@ -137,10 +137,11 @@ colResizable is being developed and maintained for free by Álvaro Prieto Laurob
 [![Please donate](http://bacubacu.com/colresizable/donate.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
 
 
-[![Lovely backers](http://i.imgur.com/7ScoW4w.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
+[![Lovely backers](http://i.imgur.com/lpyvDpP.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
 
 A million thanks to our lovely patrons: 
 * [👑 👑 👑 👑 Mellouki Mohamed 👑 👑 👑 👑 ](https://uk.linkedin.com/in/mohamed-mellouki-13570128) 
+* [👑 👑 👑 👑 Gilles Beaulac 👑 👑 👑 👑 ](https://www.linkedin.com/in/gillesbeaulac) 
 * [Igor Samulenko](https://www.linkedin.com/in/igorsamulenko) 
 * [Aaron Pesce](https://www.linkedin.com/in/aaron-pesce-9611988a) 
 
