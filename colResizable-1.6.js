@@ -32,7 +32,6 @@
 	var ie = navigator.userAgent.indexOf('Trident/4.0')>0;
 	var S;
     var pad = ""
-	try{S = sessionStorage;}catch(e){}	//Firefox crashes when executed as local file system
     
 	
 	//append required CSS rules  
@@ -50,6 +49,15 @@
         t.mode = options.resizeMode;    //shortcuts
         t.dc = t.opt.disabledColumns;
         if(t.opt.removePadding) t.addClass("JPadding");
+
+		try {
+			if (t.opt.useLocalStorage) {
+				S = localStorage;
+			} else {
+				S = sessionStorage;
+			}
+		} catch(e) {}	//Firefox crashes when executed as local file system
+
 		if(t.opt.disable) return destroy(t);				//the user is asking to destroy a previously colResized table
 		var	id = t.id = t.attr(ID) || SIGNATURE+count++;	//its id is obtained, if null new one is generated		
 		t.p = t.opt.postbackSafe; 							//short-cut to detect postback safe 		
@@ -388,6 +396,7 @@
 				marginRight: null, 				//in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
 				disable: false,					//disables all the enhancements performed in a previously colResized table	
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel,
+				useLocalStorage: false,	 	 	//use localStorage to save table layout instead of sessionStorage
                 disabledColumns: [],            //column indexes to be excluded
                 removePadding: true,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
 

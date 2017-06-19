@@ -67,6 +67,12 @@ This attribute should be set to true if the table is inside of an updatePanel or
 
 ___
 
+*  **useLocalStorage**: [type: boolean] [default: false] [version: 1.5] 
+
+When set to true columns widths saved for postbackSafe will be stored in localStorage instead of sessionStorage.
+
+___
+
 * **innerGripHtml**: [type: string] [default: empty string] [version: 1.0] 
 
 Its purpose is to allow column anchor customization by defining the HTML to be used in the column grips to provide some visual feedback. It can be used in a wide range of ways to obtain very different outputs, and its flexibility can be increased by combining it with the draggingClass attribute.
