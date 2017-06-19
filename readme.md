@@ -67,7 +67,7 @@ This attribute should be set to true if the table is inside of an updatePanel or
 
 ___
 
-*  **useLocalStorage**: [type: boolean] [default: false] [version: 1.5] 
+*  **useLocalStorage**: [type: boolean] [default: false]
 
 When set to true columns widths saved for postbackSafe will be stored in localStorage instead of sessionStorage.
 
