@@ -14,6 +14,9 @@
 
 (function($){ 	
 	
+	//IE8 Polyfill
+	if(!Array.indexOf) { Array.prototype.indexOf = function(obj) { for(var i=0; i<this.length;i++){if(this[i]==obj){return i;}} return -1; }}
+	
 	var d = $(document); 		//window object
 	var h = $("head");			//head object
 	var drag = null;			//reference to the current grip that is being dragged
