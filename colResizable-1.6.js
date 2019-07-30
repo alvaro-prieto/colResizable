@@ -52,6 +52,7 @@
 		table.opt = options;                //each table has its own options available at anytime
 		table.mode = options.resizeMode;    //shortcuts
 		table.disabledColumns = table.opt.disabledColumns;
+		table.mirroredTables = table.opt.mirroredTables;
 
 		if (table.opt.removePadding) {
 			table.addClass("JPadding");
@@ -63,7 +64,7 @@
 		}
 
 		var id = table.id = table.attr(ID) || SIGNATURE + count++;	//its id is obtained, if null new one is generated
-		table.postback = table.opt.postbackSafe; //short-cut to detect postback safe
+		table.p = table.opt.postbackSafe; //short-cut to detect postback safe
 
 		//if the object is not a table or if it was already processed then it is ignored.
 		if (!table.is("table") || tables[id] && !table.opt.partialRefresh) {
@@ -77,6 +78,12 @@
 
 		//the grips container object is added. Signature class forces table rendering in fixed-layout mode to prevent column's min-width
 		table.addClass(SIGNATURE).attr(ID, id).before('<div class="JCLRgrips"/>');
+
+		// we also iterate through the mirrored tables
+		for (let index = 0; index < table.mirroredTables.length; index++) {
+			var mTable = table.mirroredTables[index];
+			mTable.addClass(SIGNATURE);
+		}
 
 		//table.c and table.g are arrays of columns and grips respectively
 		table.g = [];
@@ -123,15 +130,7 @@
 	var createGrips = function (table) {
 
 		//table headers are obtained
-		var th = table.find(">thead>tr:first>th,>thead>tr:first>td");
-
-		//but headers can also be included in different ways
-		if (!th.length) {
-			th = table.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");
-		}
-
-		//filter invisible columns
-		th = th.filter(":visible");
+		var th = getHeaders(table);
 
 		//a table can also contain a colgroup with col elements
 		table.cg = table.find("col");
@@ -140,7 +139,7 @@
 		table.ln = th.length;
 
 		//if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
-		if (table.p && S && S[table.id]) {
+		if (table.p && (table.opt.initialStoredWidth || S && S[table.id])) {
 			memento(table, th);
 		}
 
@@ -187,6 +186,12 @@
 
 		if (!table.fixed) {
 			table.removeAttr('width').addClass(FLEX); //if not fixed, let the table grow as needed
+
+			// we also iterate through the mirrored tables
+			for (let index = 0; index < table.mirroredTables.length; index++) {
+				var mTable = table.mirroredTables[index];
+				mTable.addClass(FLEX); //if not fixed, let the table grow as needed
+			}
 		}
 		//the grips are positioned according to the current table layout
 		syncGrips(table);
@@ -195,6 +200,21 @@
 
 	};
 
+	var getHeaders = function(table, onlyVisible = true) {
+		var th = table.find(">thead>tr:first>th,>thead>tr:first>td");
+
+		//but headers can also be included in different ways
+		if (!th.length) {
+			th = table.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");
+		}
+
+		if (onlyVisible) {
+			//filter invisible columns
+			th = th.filter(":visible");
+		}
+
+		return th;
+	}
 
 	/**
 	 * Function to allow the persistence of columns dimensions after a browser postback. It is based in
@@ -203,37 +223,88 @@
 	 * @param {jQuery ref} th - reference to the first row elements (only set in deserialization)
 	 */
 	var memento = function (t, th) {
-		var w, m = 0, i = 0, aux = [], tw;
+		var w;
+		var m = 0;
+		var i = 0;
+		var aux = [];
+		var tw;
+
 		if (th) {										//in deserialization mode (after a postback)
 			t.cg.removeAttr("width");
-			if (t.opt.flush) { S[t.id] = ""; return; } 	//if flush is activated, stored data is removed
-			w = S[t.id].split(";");					//column widths is obtained
+
+			//if flush is activated, stored data is removed
+			if (t.opt.flush) {
+				S[t.id] = "";
+
+				return;
+			}
+
+			w = t.opt.initialStoredWidth ? t.opt.initialStoredWidth.split(";") : S[t.id].split(";");					//column widths is obtained
 			tw = w[t.ln + 1];
+			var mth = [];
+
+			if (t.mirroredTables && $.isArray(t.mirroredTables)) {
+				for (var index = 0; index < t.mirroredTables.length; index++) {
+					var header = getHeaders(t.mirroredTables[index]);
+					mth.push(header);
+				}
+			}
+
 			if (!t.fixed && tw) {							//if not fixed and table width data available its size is restored
 				t.width(tw *= 1);
+
 				if (t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
 					t.css('min-width', tw + PX);
 					t.w = tw;
+				}
+
+				for (var index = 0; index < t.mirroredTables.length; index++) {
+					var mTable = t.mirroredTables[index]
+
+					mTable.width(tw *= 1);
+
+					if (t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
+						mTable.css('min-width', tw + PX);
+					}
 				}
 			}
 			for (; i < t.ln; i++) {						//for each column
 				aux.push(100 * w[i] / w[t.ln] + "%"); 	//width is stored in an array since it will be required again a couple of lines ahead
 				th.eq(i).css("width", aux[i]); 	//each column width in % is restored
+
+				for (var index = 0; index < mth.length; index++) {
+					var mHeader = mth[index];
+					mHeader.eq(i).css("width", aux[i]);
+				}
 			}
 			for (i = 0; i < t.ln; i++)
 				t.cg.eq(i).css("width", aux[i]);	//this code is required in order to create an inline CSS rule with higher precedence than an existing CSS class in the "col" elements
 		} else {							//in serialization mode (after resizing a column)
-			S[t.id] = "";				//clean up previous data
-			for (; i < t.c.length; i++) {	//iterate through columns
-				w = t.c[i].width();		//width is obtained
-				S[t.id] += w + ";";		//width is appended to the sessionStorage object using ID as key
-				m += w;					//carriage is updated to obtain the full size used by columns
-			}
-			S[t.id] += m;							//the last item of the serialized string is the table's active area (width),
-			//to be able to obtain % width value of each columns while deserializing
-			if (!t.fixed) S[t.id] += ";" + t.width(); 	//if not fixed, table width is stored
+			S[t.id] = getSerializedColsWidth(t);
 		}
 	};
+
+	var getSerializedColsWidth = function(t) {
+		var w;
+		var m = 0;
+		var i = 0;
+		var result = '';
+
+		for (; i < t.c.length; i++) {	//iterate through columns
+			w = t.c[i].width();		//width is obtained
+			result += w + ";";		//width is appended to the sessionStorage object using ID as key
+			m += w;					//carriage is updated to obtain the full size used by columns
+		}
+		result += m;
+
+		//to be able to obtain % width value of each columns while deserializing
+		//if not fixed, table width is stored
+		if (!t.fixed) {
+			result += ";" + t.width();
+		}
+
+		return result;
+	}
 
 
 	/**
@@ -283,6 +354,30 @@
 			draggedCol.w = width;
 			nextCol.w = table.fixed ? width2 : nextCol.w;
 		}
+
+		// we also iterate through the mirrored tables
+		for (let index = 0; index < table.mirroredTables.length; index++) {
+			var mTable = table.mirroredTables[index];
+			var ths = getHeaders(mTable);
+			var draggedMirrorCol = $(ths[i]);
+			var nextMirrorCol = $(ths[i + 1]);
+			//their new width is set
+			draggedMirrorCol.width(width + PX);
+			var colMirrorGroup = mTable.find("col");
+			colMirrorGroup.eq(i).width(width + PX);
+
+			if (table.fixed) { //if fixed mode
+				nextMirrorCol.width(width2 + PX);
+				colMirrorGroup.eq(i + 1).width(width2 + PX);
+			} else if (table.opt.overflow) {				//if overflow is set, incriment min-width to force overflow
+				mTable.css('min-width', table.w + inc);
+			}
+
+			if (isOver) {
+				draggedMirrorCol.w = width;
+				nextMirrorCol.w = table.fixed ? width2 : nextCol.w;
+			}
+		}
 	};
 
 
@@ -301,6 +396,21 @@
 			c.width(w[i]).w = w[i];				//set column widths applying bounds (table's max-width)
 		});
 		t.addClass(FLEX);						//allow table width changes
+
+		// we also iterate through the mirrored tables
+		for (let index = 0; index < t.mirroredTables.length; index++) {
+			var mTable = t.mirroredTables[index];
+			var ths = getHeaders(mTable);
+			mTable.c = $.map(ths, function (th) {			//obtain mirrored table header cells
+				return $(th);
+			});
+			mTable.width(t.width()).removeClass(FLEX);	//prevent mirrored table width changes
+			$.each(mTable.c, function (i, c) {
+				//set column widths applying bounds (table's max-width)
+				c.width(w[i]).w = w[i];	// use original table column widths
+			});
+			mTable.addClass(FLEX); //allow table width changes
+		}
 	};
 
 
@@ -348,6 +458,20 @@
 				} else {
 					table.w = table.width();
 				}
+
+				// we also iterate through the mirrored tables
+				for (let index = 0; index < t.mirroredTables.length; index++) {
+					var mTable = t.mirroredTables[index];
+					var ths = getHeaders(mTable);
+					var mirrorCol = $(ths[i]);
+					mirrorCol.width(drag.w);
+
+					if (!table.fixed && table.opt.overflow) {			//if overflow is set, incriment min-width to force overflow
+						mTable.css('min-width', table.w + x - drag.l);
+					} else {
+						mTable.w = table.width();
+					}
+				}
 			} else {
 				syncCols(table, i); 			//columns are synchronized
 			}
@@ -390,6 +514,15 @@
 			if (last) {
 				draggedCol.width(drag.w);
 				draggedCol.w = drag.w;
+
+				// we also iterate through the mirrored tables
+				for (let index = 0; index < t.mirroredTables.length; index++) {
+					var mTable = t.mirroredTables[index];
+					var ths = getHeaders(mTable);
+					var draggedMirrorCol = $(ths[i]);
+					draggedMirrorCol.width(drag.w);
+					draggedMirrorCol.w = drag.w;
+				}
 			} else {
 				syncCols(table, i, true);	//the columns are updated
 			}
@@ -403,7 +536,8 @@
 			//if there is a callback function, it is fired
 			if (cb) {
 				e.currentTarget = table[0];
-				cb(e, i, draggedCol);
+				var serializedCols = table.p ? getSerializedColsWidth(table) : null;
+				cb(e, i, draggedCol, serializedCols);
 			}
 
 			//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
@@ -499,6 +633,8 @@
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel,
 				disabledColumns: [],            //column indexes to be excluded
 				removePadding: true,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
+				initialStoredWidth: null,
+				mirroredTables: null,
 
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
