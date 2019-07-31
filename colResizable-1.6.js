@@ -200,7 +200,7 @@
 
 	};
 
-	var getHeaders = function(table, onlyVisible = true) {
+	var getHeaders = function(table, onlyVisible) {
 		var th = table.find(">thead>tr:first>th,>thead>tr:first>td");
 
 		//but headers can also be included in different ways
@@ -460,8 +460,8 @@
 				}
 
 				// we also iterate through the mirrored tables
-				for (let index = 0; index < t.mirroredTables.length; index++) {
-					var mTable = t.mirroredTables[index];
+				for (let index = 0; index < table.mirroredTables.length; index++) {
+					var mTable = table.mirroredTables[index];
 					var ths = getHeaders(mTable);
 					var mirrorCol = $(ths[i]);
 					mirrorCol.width(drag.w);
