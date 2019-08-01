@@ -516,8 +516,8 @@
 				draggedCol.w = drag.w;
 
 				// we also iterate through the mirrored tables
-				for (let index = 0; index < t.mirroredTables.length; index++) {
-					var mTable = t.mirroredTables[index];
+				for (let index = 0; index < table.mirroredTables.length; index++) {
+					var mTable = table.mirroredTables[index];
 					var ths = getHeaders(mTable);
 					var draggedMirrorCol = $(ths[i]);
 					draggedMirrorCol.width(drag.w);
