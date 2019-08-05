@@ -80,9 +80,11 @@
 		table.addClass(SIGNATURE).attr(ID, id).before('<div class="JCLRgrips"/>');
 
 		// we also iterate through the mirrored tables
-		for (let index = 0; index < table.mirroredTables.length; index++) {
-			var mTable = table.mirroredTables[index];
-			mTable.addClass(SIGNATURE);
+		if (table.mirroredTables && $.isArray(table.mirroredTables)) {
+			for (let index = 0; index < table.mirroredTables.length; index++) {
+				var mTable = table.mirroredTables[index];
+				mTable.addClass(SIGNATURE);
+			}
 		}
 
 		//table.c and table.g are arrays of columns and grips respectively
@@ -188,9 +190,11 @@
 			table.removeAttr('width').addClass(FLEX); //if not fixed, let the table grow as needed
 
 			// we also iterate through the mirrored tables
-			for (let index = 0; index < table.mirroredTables.length; index++) {
-				var mTable = table.mirroredTables[index];
-				mTable.addClass(FLEX); //if not fixed, let the table grow as needed
+			if (table.mirroredTables && $.isArray(table.mirroredTables)) {
+				for (let index = 0; index < table.mirroredTables.length; index++) {
+					var mTable = table.mirroredTables[index];
+					mTable.addClass(FLEX); //if not fixed, let the table grow as needed
+				}
 			}
 		}
 		//the grips are positioned according to the current table layout
@@ -258,13 +262,15 @@
 					t.w = tw;
 				}
 
-				for (var index = 0; index < t.mirroredTables.length; index++) {
-					var mTable = t.mirroredTables[index]
+				if (t.mirroredTables && $.isArray(t.mirroredTables)) {
+					for (var index = 0; index < t.mirroredTables.length; index++) {
+						var mTable = t.mirroredTables[index]
 
-					mTable.width(tw *= 1);
+						mTable.width(tw *= 1);
 
-					if (t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
-						mTable.css('min-width', tw + PX);
+						if (t.opt.overflow) {				//if overfolw flag is set, restore table width also as table min-width
+							mTable.css('min-width', tw + PX);
+						}
 					}
 				}
 			}
@@ -356,26 +362,28 @@
 		}
 
 		// we also iterate through the mirrored tables
-		for (let index = 0; index < table.mirroredTables.length; index++) {
-			var mTable = table.mirroredTables[index];
-			var ths = getHeaders(mTable);
-			var draggedMirrorCol = $(ths[i]);
-			var nextMirrorCol = $(ths[i + 1]);
-			//their new width is set
-			draggedMirrorCol.width(width + PX);
-			var colMirrorGroup = mTable.find("col");
-			colMirrorGroup.eq(i).width(width + PX);
+		if (table.mirroredTables && $.isArray(table.mirroredTables)) {
+			for (let index = 0; index < table.mirroredTables.length; index++) {
+				var mTable = table.mirroredTables[index];
+				var ths = getHeaders(mTable);
+				var draggedMirrorCol = $(ths[i]);
+				var nextMirrorCol = $(ths[i + 1]);
+				//their new width is set
+				draggedMirrorCol.width(width + PX);
+				var colMirrorGroup = mTable.find("col");
+				colMirrorGroup.eq(i).width(width + PX);
 
-			if (table.fixed) { //if fixed mode
-				nextMirrorCol.width(width2 + PX);
-				colMirrorGroup.eq(i + 1).width(width2 + PX);
-			} else if (table.opt.overflow) {				//if overflow is set, incriment min-width to force overflow
-				mTable.css('min-width', table.w + inc);
-			}
+				if (table.fixed) { //if fixed mode
+					nextMirrorCol.width(width2 + PX);
+					colMirrorGroup.eq(i + 1).width(width2 + PX);
+				} else if (table.opt.overflow) {				//if overflow is set, incriment min-width to force overflow
+					mTable.css('min-width', table.w + inc);
+				}
 
-			if (isOver) {
-				draggedMirrorCol.w = width;
-				nextMirrorCol.w = table.fixed ? width2 : nextCol.w;
+				if (isOver) {
+					draggedMirrorCol.w = width;
+					nextMirrorCol.w = table.fixed ? width2 : nextCol.w;
+				}
 			}
 		}
 	};
@@ -398,18 +406,20 @@
 		t.addClass(FLEX);						//allow table width changes
 
 		// we also iterate through the mirrored tables
-		for (let index = 0; index < t.mirroredTables.length; index++) {
-			var mTable = t.mirroredTables[index];
-			var ths = getHeaders(mTable);
-			mTable.c = $.map(ths, function (th) {			//obtain mirrored table header cells
-				return $(th);
-			});
-			mTable.width(t.width()).removeClass(FLEX);	//prevent mirrored table width changes
-			$.each(mTable.c, function (i, c) {
-				//set column widths applying bounds (table's max-width)
-				c.width(w[i]).w = w[i];	// use original table column widths
-			});
-			mTable.addClass(FLEX); //allow table width changes
+		if (t.mirroredTables && $.isArray(t.mirroredTables)) {
+			for (let index = 0; index < t.mirroredTables.length; index++) {
+				var mTable = t.mirroredTables[index];
+				var ths = getHeaders(mTable);
+				mTable.c = $.map(ths, function (th) {			//obtain mirrored table header cells
+					return $(th);
+				});
+				mTable.width(t.width()).removeClass(FLEX);	//prevent mirrored table width changes
+				$.each(mTable.c, function (i, c) {
+					//set column widths applying bounds (table's max-width)
+					c.width(w[i]).w = w[i];	// use original table column widths
+				});
+				mTable.addClass(FLEX); //allow table width changes
+			}
 		}
 	};
 
@@ -460,16 +470,18 @@
 				}
 
 				// we also iterate through the mirrored tables
-				for (let index = 0; index < table.mirroredTables.length; index++) {
-					var mTable = table.mirroredTables[index];
-					var ths = getHeaders(mTable);
-					var mirrorCol = $(ths[i]);
-					mirrorCol.width(drag.w);
+				if (table.mirroredTables && $.isArray(table.mirroredTables)) {
+					for (let index = 0; index < table.mirroredTables.length; index++) {
+						var mTable = table.mirroredTables[index];
+						var ths = getHeaders(mTable);
+						var mirrorCol = $(ths[i]);
+						mirrorCol.width(drag.w);
 
-					if (!table.fixed && table.opt.overflow) {			//if overflow is set, incriment min-width to force overflow
-						mTable.css('min-width', table.w + x - drag.l);
-					} else {
-						mTable.w = table.width();
+						if (!table.fixed && table.opt.overflow) {			//if overflow is set, incriment min-width to force overflow
+							mTable.css('min-width', table.w + x - drag.l);
+						} else {
+							mTable.w = table.width();
+						}
 					}
 				}
 			} else {
@@ -516,12 +528,14 @@
 				draggedCol.w = drag.w;
 
 				// we also iterate through the mirrored tables
-				for (let index = 0; index < table.mirroredTables.length; index++) {
-					var mTable = table.mirroredTables[index];
-					var ths = getHeaders(mTable);
-					var draggedMirrorCol = $(ths[i]);
-					draggedMirrorCol.width(drag.w);
-					draggedMirrorCol.w = drag.w;
+				if (table.mirroredTables && $.isArray(table.mirroredTables)) {
+					for (let index = 0; index < table.mirroredTables.length; index++) {
+						var mTable = table.mirroredTables[index];
+						var ths = getHeaders(mTable);
+						var draggedMirrorCol = $(ths[i]);
+						draggedMirrorCol.width(drag.w);
+						draggedMirrorCol.w = drag.w;
+					}
 				}
 			} else {
 				syncCols(table, i, true);	//the columns are updated
