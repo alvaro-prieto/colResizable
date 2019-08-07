@@ -204,7 +204,7 @@
 
 	};
 
-	var getHeaders = function(table, onlyVisible) {
+	var getHeaders = function(table, allColumns) {
 		var th = table.find(">thead>tr:first>th,>thead>tr:first>td");
 
 		//but headers can also be included in different ways
@@ -212,7 +212,7 @@
 			th = table.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");
 		}
 
-		if (onlyVisible) {
+		if (!allColumns) {
 			//filter invisible columns
 			th = th.filter(":visible");
 		}
