@@ -301,11 +301,14 @@
 			result += w + ";";		//width is appended to the sessionStorage object using ID as key
 			m += w;					//carriage is updated to obtain the full size used by columns
 		}
-		result += m;
+
+		if (result) {
+			result += m;
+		}
 
 		//to be able to obtain % width value of each columns while deserializing
 		//if not fixed, table width is stored
-		if (!t.fixed) {
+		if (!t.fixed && result) {
 			result += ";" + t.width();
 		}
 
