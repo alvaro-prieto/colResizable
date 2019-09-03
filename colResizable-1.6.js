@@ -110,6 +110,11 @@
 		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pity that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
 		tables[id] = table; 	//the table object is stored using its id as key
 		createGrips(table);	//grips are created
+		var initCb = table.opt.onInit;
+
+		if (initCb && typeof initCb === 'function') {
+			initCb(table);
+		}
 	};
 
 
@@ -655,7 +660,8 @@
 
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
-				onResize: null					//callback function fired when the dragging process is over
+				onResize: null,					//callback function fired when the dragging process is over
+				onInit: null					//callback function fired when init is complete
 			}
 			var options = $.extend(defaults, options);
 
