@@ -110,6 +110,7 @@
 		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pity that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
 		tables[id] = table; 	//the table object is stored using its id as key
 		createGrips(table);	//grips are created
+
 		var initCb = table.opt.onInit;
 
 		if (initCb && typeof initCb === 'function') {
@@ -198,7 +199,6 @@
 			if (table.mirroredTables && $.isArray(table.mirroredTables)) {
 				for (let index = 0; index < table.mirroredTables.length; index++) {
 					var mTable = table.mirroredTables[index];
-					mTable.addClass(FLEX); //if not fixed, let the table grow as needed
 				}
 			}
 		}
@@ -280,7 +280,13 @@
 				}
 			}
 			for (; i < t.ln; i++) {						//for each column
-				aux.push(100 * w[i] / w[t.ln] + "%"); 	//width is stored in an array since it will be required again a couple of lines ahead
+				//width is stored in an array since it will be required again a couple of lines ahead
+				if (t.opt.exactWidth) {
+					aux.push(w[i]);
+				} else {
+					aux.push(100 * w[i] / w[t.ln] + "%");
+				}
+
 				th.eq(i).css("width", aux[i]); 	//each column width in % is restored
 
 				for (var index = 0; index < mth.length; index++) {
@@ -421,12 +427,10 @@
 				mTable.c = $.map(ths, function (th) {			//obtain mirrored table header cells
 					return $(th);
 				});
-				mTable.width(t.width()).removeClass(FLEX);	//prevent mirrored table width changes
 				$.each(mTable.c, function (i, c) {
 					//set column widths applying bounds (table's max-width)
 					c.width(w[i]).w = w[i];	// use original table column widths
 				});
-				mTable.addClass(FLEX); //allow table width changes
 			}
 		}
 	};
@@ -654,9 +658,10 @@
 				disable: false,					//disables all the enhancements performed in a previously colResized table
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel,
 				disabledColumns: [],            //column indexes to be excluded
-				removePadding: true,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
+				removePadding: true,           	//for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
 				initialStoredWidth: null,
 				mirroredTables: null,
+				exactWidth: false,				//whether we restore exact width in px or percentage
 
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
