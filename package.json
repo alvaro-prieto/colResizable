@@ -1,7 +1,7 @@
 {
 	"name" : "colresizable",
-	"version" : "1.6.0",
-    "description" : "jQuery plugin to resize table columns",
+	"version" : "1.6.1",
+	"description" : "jQuery plugin to resize table columns",
 	"title" : "colResizable",
 	"author" : {
 		"name" : "Alvaro Prieto Lauroba",
@@ -33,6 +33,7 @@
         "jquery"
 	],
 	"homepage" : "http://bacubacu.com/colresizable/",
+	"main": "colResizable-1.6.min.js",
 	"files" : [
 		"colResizable-1.6.min.js",
 		"./samples"
