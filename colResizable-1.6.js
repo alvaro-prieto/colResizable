@@ -110,6 +110,7 @@
 		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pity that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
 		tables[id] = table; 	//the table object is stored using its id as key
 		createGrips(table);	//grips are created
+		applyBounds(table);
 
 		var initCb = table.opt.onInit;
 
