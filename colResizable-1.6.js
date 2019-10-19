@@ -38,7 +38,7 @@
     
 	
 	//append required CSS rules  
-    h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden}  .JPadding > tbody > tr > td, .JPadding > tbody > tr > th{padding-left:0!important; padding-right:0!important;} .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
+    h.append("<style type='text/css'> .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden}  .JPadding > tbody > tr > td, .JPadding > tbody > tr > th{padding-left:0!important; padding-right:0!important;} .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
 
 	
 	/**
@@ -50,7 +50,7 @@
 		var t = $(tb);				    //the table object is wrapped
         t.opt = options;                //each table has its own options available at anytime
         t.mode = options.resizeMode;    //shortcuts
-        t.dc = t.opt.disabledColumns;
+		t.dc = t.opt.disabledColumns;
         if(t.opt.removePadding) t.addClass("JPadding");
 
 		try {
@@ -73,7 +73,11 @@
 		t.cs = I(ie? tb.cellSpacing || tb.currentStyle.borderSpacing :t.css('border-spacing'))||2;	//table cellspacing (not even jQuery is fully cross-browser)
 		t.b  = I(ie? tb.border || tb.currentStyle.borderLeftWidth :t.css('border-left-width'))||1;	//outer border width (again cross-browser issues)
 		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pity that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
-		tables[id] = t; 	//the table object is stored using its id as key	
+		tables[id] = t; 	//the table object is stored using its id as key
+
+		// Setting table layout fixed or auto according to the option. This will be set auto when we have to use other than main row for column resizing feature.
+		if(t.opt.layoutFixed) h.append("<style> .JColResizer{table-layout: fixed} </style>");
+		else h.append("<style> .JColResizer{table-layout: auto} </style>");
 		createGrips(t);		//grips are created 
 	
 	};
@@ -90,15 +94,19 @@
 		delete tables[id];						//clean up data
 	};
 
-
 	/**
 	 * Function to create all the grips associated with the table given by parameters 
 	 * @param {jQuery ref} t - table object
 	 */
 	var createGrips = function(t){	
-	
-        var th = t.find(">thead>tr:first>th,>thead>tr:first>td"); //table headers are obtained
-		if(!th.length) th = t.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");	 //but headers can also be included in different ways
+		var th
+
+		if(t.opt.find !== undefined){
+			th = t.find(t.opt.find)	// Giving more flexibility to the developer to write find query.
+		} else {
+			th = t.find(">thead>tr:first>th,>thead>tr:first>td"); //table headers are obtained
+			if(!th.length) th = t.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td");	 //but headers can also be included in different ways
+		}
 		th = th.filter(":visible");					//filter invisible columns
 		t.cg = t.find("col"); 						//a table can also contain a colgroup with col elements		
 		t.ln = th.length;							//table length is stored	
@@ -250,7 +258,7 @@
 		if(!drag) return; 
         var t = drag.t;		//table object reference 
         var oe = e.originalEvent.touches;
-        var ox = oe ? oe[0].pageX : e.pageX;    //original position (touch or mouse)
+		var ox = oe ? oe[0].pageX : e.pageX;    //original position (touch or mouse)
         var x =  ox - drag.ox + drag.l;	        //next position according to horizontal mouse position increment
 		var mw = t.opt.minWidth, i = drag.i ;	//cell's min width
 		var l = t.cs*1.5 + mw + t.b;
@@ -385,13 +393,14 @@
 			
 				//attributes:
                 
-                resizeMode: 'fit',                    //mode can be 'fit', 'flex' or 'overflow'
+				resizeMode: 'fit',    			//mode can be 'fit', 'flex' or 'overflow'
+				layoutFixed: true,				// by default layout of the table is fixed
                 draggingClass: 'JCLRgripDrag',	//css-class used when a grip is being dragged (for visual feedback purposes)
 				gripInnerHtml: '',				//if it is required to use a custom grip it can be done using some custom HTML				
 				liveDrag: false,				//enables table-layout updating while dragging	
 				minWidth: 15, 					//minimum width value in pixels allowed for a column 
 				headerOnly: false,				//specifies that the size of the the column resizing anchors will be bounded to the size of the first row 
-				hoverCursor: "col-resize",  		//cursor to be used on grip hover
+				hoverCursor: "col-resize",  	//cursor to be used on grip hover
 				dragCursor: "col-resize",  		//cursor to be used while dragging
 				postbackSafe: false, 			//when it is enabled, table layout can persist after postback or page refresh. It requires browsers with sessionStorage support (it can be emulated with sessionStorage.js). 
 				flush: false, 					//when postbakSafe is enabled, and it is required to prevent layout restoration after postback, 'flush' will remove its associated layout data 
@@ -401,7 +410,7 @@
 				partialRefresh: false,			//can be used in combination with postbackSafe when the table is inside of an updatePanel,
 				useLocalStorage: false,	 	 	//use localStorage to save table layout instead of sessionStorage
                 disabledColumns: [],            //column indexes to be excluded
-                removePadding: true,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
+                removePadding: true,            //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
 
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
