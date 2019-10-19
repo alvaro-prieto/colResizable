@@ -62,7 +62,7 @@
 		} catch(e) {}	//Firefox crashes when executed as local file system
 
 		if(t.opt.disable) return destroy(t);				//the user is asking to destroy a previously colResized table
-		var	id = t.id = t.attr(ID) || SIGNATURE+count++;	//its id is obtained, if null new one is generated		
+		var	id = t.id = t.attr(ID) || SIGNATURE+count;		//its id is obtained, if null new one is generated		
 		t.p = t.opt.postbackSafe; 							//short-cut to detect postback safe 		
 		if(!t.is("table") || tables[id] && !t.opt.partialRefresh) return; 		//if the object is not a table or if it was already processed then it is ignored.
 		if (t.opt.hoverCursor !== 'col-resize') h.append("<style type='text/css'>.JCLRgrip .JColResizer:hover{cursor:"+ t.opt.hoverCursor +"!important}</style>");  //if hoverCursor has been set, append the style
@@ -76,8 +76,9 @@
 		tables[id] = t; 	//the table object is stored using its id as key
 
 		// Setting table layout fixed or auto according to the option. This will be set auto when we have to use other than main row for column resizing feature.
-		if(t.opt.layoutFixed) h.append("<style> .JColResizer{table-layout: fixed} </style>");
-		else h.append("<style> .JColResizer{table-layout: auto} </style>");
+		// Here we are using id instead of class.
+		if(t.opt.layoutFixed) h.append("<style> #JColResizer"+count++ +"{table-layout: fixed} </style>");
+		else h.append("<style> #JColResizer"+count++ +"{table-layout: auto} </style>");
 		createGrips(t);		//grips are created 
 	
 	};
