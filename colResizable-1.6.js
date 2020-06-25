@@ -112,11 +112,11 @@
                 g.addClass("JCLRLastGrip");         //add a different css class to stlye it in a different way if needed
                 if(t.f) g.html("");                 //if the table resizing mode is set to fixed, the last grip is removed since table with can not change
             }
-            g.bind('touchstart mousedown', onGripMouseDown); //bind the mousedown event to start dragging 
+            g.on('touchstart mousedown', onGripMouseDown); //bind the mousedown event to start dragging 
             
             if (!dc){ 
                 //if normal column bind the mousedown event to start dragging, if disabled then apply its css class
-                g.removeClass('JCLRdisabledGrip').bind('touchstart mousedown', onGripMouseDown);      
+                g.removeClass('JCLRdisabledGrip').on('touchstart mousedown', onGripMouseDown);      
             }else{
                 g.addClass('JCLRdisabledGrip'); 
             }
@@ -292,7 +292,7 @@
 	 */
 	var onGripDragOver = function(e){	
 		
-		d.unbind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE).unbind('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE);
+		d.off('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE).off('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE);
 		$("head :last-child").remove(); 				//remove the dragging cursor style	
 		if(!drag) return;
 		drag.removeClass(drag.t.opt.draggingClass);		//remove the grip's dragging css-class
@@ -330,7 +330,7 @@
 		g.l = g.position().left;
         g.x = g.l;
         
-		d.bind('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE, onGripDrag ).bind('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE, onGripDragOver);	//mousemove and mouseup events are bound
+		d.on('touchmove.'+SIGNATURE+' mousemove.'+SIGNATURE, onGripDrag ).on('touchend.'+SIGNATURE+' mouseup.'+SIGNATURE, onGripDragOver);	//mousemove and mouseup events are bound
 		h.append("<style type='text/css'>*{cursor:"+ t.opt.dragCursor +"!important}</style>"); 	//change the mouse cursor
 		g.addClass(t.opt.draggingClass); 	//add the dragging class (to allow some visual feedback)				
 		drag = g;							//the current grip is stored as the current dragging object
@@ -372,7 +372,7 @@
 
 
 	//bind resize event, to update grips position 
-	$(window).bind('resize.'+SIGNATURE, onResize); 
+	$(window).on('resize', 'resize.'+SIGNATURE, onResize); 
 
 
 	/**
