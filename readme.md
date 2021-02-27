@@ -143,11 +143,12 @@ colResizable is being developed and maintained for free by Álvaro Prieto Laurob
 [![Please donate](http://bacubacu.com/colresizable/donate.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
 
 
-[![Lovely backers](http://yoliprieto.com/alvaro/colresizable/backers1.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
+[![Lovely backers](https://github.com/alvaro-prieto/colResizable/blob/master/misc/backers.jpg?raw=true)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
 
 A million thanks to our lovely patrons: 
 * [👑 👑 👑 👑 Mellouki Mohamed 👑 👑 👑 👑 ](https://uk.linkedin.com/in/mohamed-mellouki-13570128) 
 * [👑 👑 👑 👑 Gilles Beaulac 👑 👑 👑 👑 ](https://www.linkedin.com/in/gillesbeaulac) 
+* [💎 💎 💎 Eric O'Dell 💎 💎 💎 ](https://www.linkedin.com/in/eric-odell-86300894) 
 * [💎 💎 💎 Maxim Morozenko 💎 💎 💎 ](https://morozenko.com/) 
 * [Igor Samulenko](https://www.linkedin.com/in/igorsamulenko) 
 * [Aaron Pesce](https://www.linkedin.com/in/aaron-pesce-9611988a) 
