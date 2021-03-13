@@ -148,7 +148,7 @@ colResizable is being developed and maintained for free by Álvaro Prieto Laurob
 A million thanks to our lovely patrons: 
 * [👑 👑 👑 👑 Mellouki Mohamed 👑 👑 👑 👑 ](https://uk.linkedin.com/in/mohamed-mellouki-13570128) 
 * [👑 👑 👑 👑 Gilles Beaulac 👑 👑 👑 👑 ](https://www.linkedin.com/in/gillesbeaulac) 
-* [💎 💎 💎 Eric O'Dell 💎 💎 💎 ](https://www.linkedin.com/in/eric-odell-86300894) 
+* 💎 💎 💎 Eric O'Dell 💎 💎 💎 
 * [💎 💎 💎 Maxim Morozenko 💎 💎 💎 ](https://morozenko.com/) 
 * [Igor Samulenko](https://www.linkedin.com/in/igorsamulenko) 
 * [Aaron Pesce](https://www.linkedin.com/in/aaron-pesce-9611988a) 
