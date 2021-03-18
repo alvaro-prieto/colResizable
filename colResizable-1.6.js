@@ -308,9 +308,9 @@
             }else{
                 syncCols(t, i, true);	//the columns are updated
             }
-            if(!t.f) applyBounds(t);	//if not fixed mode, then apply bounds to obtain real width values
-            syncGrips(t);				//the grips are updated
-            if (cb) { e.currentTarget = t[0]; cb(e); }	//if there is a callback function, it is fired
+            if(!t.f && t.opt.applyBounds) applyBounds(t); //if not fixed mode, then apply bounds to obtain real width values
+            syncGrips(t);				  //the grips are updated
+            if (cb) { e.currentTarget = t[0]; cb(e); }	  //if there is a callback function, it is fired
             if(t.p && S) memento(t); 	//if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
         }
 		drag = null;   //since the grip's dragging is over									
@@ -359,7 +359,7 @@
                     for(i=0; i<t.ln; i++) t.c[i].css("width", M.round(1000*t.c[i].w/mw)/10 + "%").l=true; 
                     //c.l locks the column, telling us that its c.w is outdated									
                 }else{     //in non fixed-sized tables
-                    applyBounds(t);         //apply the new bounds 
+                    if(t.opt.applyBounds) applyBounds(t);         //apply the new bounds 
                     if(t.mode == 'flex' && t.p && S){   //if postbackSafe is enabled and there is sessionStorage support,
                         memento(t);                     //the new layout is serialized and stored for 'flex' tables
                     }
@@ -401,7 +401,8 @@
 				useLocalStorage: false,	 	 	//use localStorage to save table layout instead of sessionStorage
                 disabledColumns: [],            //column indexes to be excluded
                 removePadding: true,           //for some uses (such as multiple range slider), it is advised to set this modifier to true, it will remove padding from the header cells.
-
+				applyBounds: true,                      //in flex mode sometimes is not needed to apply bounds in order to keep disabled columns with fixed widths
+		    
 				//events:
 				onDrag: null, 					//callback function to be fired during the column resizing process if liveDrag is enabled
 				onResize: null					//callback function fired when the dragging process is over
