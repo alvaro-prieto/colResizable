@@ -15,6 +15,10 @@
 			"url" : "GPL-LICENSE.txt"
 		}
 	],
+	"repository": {	
+		"type": "git",
+		"url": "https://github.com/alvaro-prieto/colResizable.git"
+	},
 	"dependencies" : {
 		"jquery" : "1 - 3"
 	},
