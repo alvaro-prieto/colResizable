@@ -1,5 +1,3 @@
-![alt text](http://bacubacu.com/colresizable/githubLogo.png "colResizable jQuery plugin")
-
 # colResizable
 
 colResizable is a free jQuery plugin designed to enhance any kind of HTML table object adding column resizing features by dragging column anchors manually. It is compatible with both mouse and touch devices and has some nice features such as layout persistence after page refresh or postback and compatibility with both percentage and pixel-based table layouts. It is tiny in size (colResizable 1.0 is only 2kb) and it is fully compatible with all major browsers(IE7+, Firefox, Chrome and Opera). 
@@ -139,8 +137,6 @@ This event is fired while dragging a column anchor if liveDrag is enabled. It ca
 ## Backers
 
 colResizable is being developed and maintained for free by Álvaro Prieto Lauroba since 2011. Fortunately there is some lovely people who donated to improve this plugin. [Do you like this plugin? Would you like to help me to improve it? Please! buy me a beer](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)  
-
-[![Please donate](http://bacubacu.com/colresizable/donate.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
 
 
 [![Lovely backers](https://github.com/alvaro-prieto/colResizable/blob/master/misc/backers.jpg?raw=true)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XLP55DVN85X8L)
